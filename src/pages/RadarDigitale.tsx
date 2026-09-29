@@ -221,19 +221,14 @@ const RadarDigitale = () => {
 
   const likeMutation = useMutation({
     mutationFn: async (editionId: string) => {
-      const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/radar-like`,
-        {
-          method: "POST",
-          headers: { 
-            "Content-Type": "application/json", 
-            "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY 
-          },
-          body: JSON.stringify({ edition_id: editionId }),
-        }
-      );
-      if (!res.ok) throw new Error("Erro ao processar curtida");
-      return res.json();
+      const { data, error } = await supabase.functions.invoke("radar-like", {
+        body: { edition_id: editionId },
+      });
+      if (error) throw error;
+      if (!data || typeof data.liked !== "boolean") {
+        throw new Error("Resposta inválida ao processar curtida");
+      }
+      return data as { liked: boolean; likes: number };
     },
     onSuccess: (data, editionId) => {
       setLikedEditions((prev) => {
@@ -247,6 +242,10 @@ const RadarDigitale = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["radar-editions"] });
     },
+    onError: (error) => {
+      console.error("Erro ao registrar curtida:", error);
+      toast.error("Não foi possível registrar sua curtida.");
+    },
   });
 
   const reactionMutation = useMutation({
@@ -257,19 +256,18 @@ const RadarDigitale = () => {
       editionId: string;
       reaction: "happy" | "sad";
     }) => {
-      const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/radar-reaction`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
-          body: JSON.stringify({ edition_id: editionId, reaction }),
-        }
-      );
-      if (!res.ok) throw new Error("Erro ao registrar reação");
-      return res.json() as Promise<{ reaction: "happy" | "sad" | null }>;
+      const { data, error } = await supabase.functions.invoke("radar-reaction", {
+        body: { edition_id: editionId, reaction },
+      });
+      if (error) throw error;
+      if (!data || !("reaction" in data)) {
+        throw new Error("Resposta inválida ao registrar reação");
+      }
+      return data as {
+        reaction: "happy" | "sad" | null;
+        happy_count: number;
+        sad_count: number;
+      };
     },
     onSuccess: (data, variables) => {
       setReactions((prev) => {
