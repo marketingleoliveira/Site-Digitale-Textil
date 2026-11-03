@@ -1,7 +1,0 @@
-project_id = "tktdlaclbavbycwcsazx"
-
-[functions.radar-like]
-verify_jwt = false
-
-[functions.radar-reaction]
-verify_jwt = false

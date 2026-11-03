@@ -1,3 +1,4 @@
+import { FabricCommercialSEO } from "@/components/fabric/FabricCommercialSEO";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { SEO } from "@/components/SEO";
@@ -112,7 +113,8 @@ export default function FabricDetail() {
             </div>
           </div>
         </main>
-        <Footer />
+
+      <Footer />
       </div>
     );
   }
@@ -139,7 +141,7 @@ export default function FabricDetail() {
   const features = Array.isArray(fabric.features) ? fabric.features : [];
   const specifications = fabric.specifications as Record<string, string> || {};
   const applications = fabric.applications || [];
-  const colorVariants = Array.isArray(fabric.color_variants) 
+  const colorVariants = Array.isArray(fabric.color_variants)
     ? (fabric.color_variants as unknown as ColorVariant[])
     : [];
   const galleryImages = Array.isArray(fabric.gallery_images)
@@ -157,7 +159,9 @@ export default function FabricDetail() {
     <div className="min-h-screen">
       <Header />
       <SEO
-        title={`Tecido ${fabric.name} – Ficha Técnica e Composição`}
+        title={fabric.slug === "aerodry"
+          ? "Tecido Aerodry: características e aplicações"
+          : `Tecido ${fabric.name} – Ficha Técnica e Composição`}
         description={`${fabric.name}: ${(fabric.short_description || fabric.description || "tecido técnico Digitale Têxtil com alta performance").toString().slice(0, 150)}`}
         keywords={`tecido ${fabric.name}, malha ${fabric.name}, ${fabric.name} digitale, ficha técnica ${fabric.name}, comprar tecido ${fabric.name}`}
         image={fabric.image_url || undefined}
@@ -247,7 +251,7 @@ export default function FabricDetail() {
                         {fabric.name}
                       </h1>
                     </div>
-                    <FavoriteButton 
+                    <FavoriteButton
                       fabric={fabric}
                       size="lg"
                     />
@@ -261,6 +265,60 @@ export default function FabricDetail() {
                 {colorVariants.length > 0 && (
                   <ColorGallery colors={colorVariants} />
                 )}
+
+
+                {/* FABRIC_TECHNICAL_CONTENT_V1 */}
+                <section aria-labelledby="fabric-technical-title" className="space-y-5">
+                  <h2 id="fabric-technical-title" className="text-2xl font-bold">
+                    Características e ficha técnica do tecido {fabric.name}
+                  </h2>
+
+                  {Object.keys(specifications).length > 0 && (
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {Object.entries(specifications).map(([label, value]) => (
+                        <div key={label} className="rounded-xl border border-border p-4">
+                          <dt className="text-sm text-muted-foreground">{label}</dt>
+                          <dd className="mt-1 font-medium">{String(value)}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+
+                  {features.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-semibold">Características cadastradas</h3>
+                      <ul className="mt-3 list-disc pl-5 space-y-2">
+                        {features.map((feature, index) => (
+                          <li key={index}>{String(feature)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {Array.isArray(applications) && applications.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        Para que serve o tecido {fabric.name}?
+                      </h3>
+                      <ul className="mt-3 list-disc pl-5 space-y-2">
+                        {applications.map((application, index) => (
+                          <li key={index}>{String(application)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {fabric.slug === "aerodry" && (
+                    <div className="rounded-xl border border-border p-5 space-y-3">
+                      <h3 className="text-lg font-semibold">Tecido Aerodry é bom para minha peça?</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Compare a ficha técnica e as aplicações cadastradas nesta página
+                        com as necessidades da sua confecção. Para avaliar o resultado
+                        na sua peça, solicite uma amostra e orientação da equipe comercial.
+                      </p>
+                    </div>
+                  )}
+                </section>
 
                 {/* Lead Form - replaces specs/features/applications */}
                 <FabricLeadForm

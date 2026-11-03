@@ -48,10 +48,12 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: "lead_id required" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-    const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
+    if (!SUPABASE_URL || !SERVICE_KEY || !LOVABLE_API_KEY) {
+      throw new Error("Configuração do backend indisponível");
+    }
 
     const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 
@@ -182,6 +184,15 @@ Use a função register_validation para retornar a análise estruturada.`;
       validated_at: new Date().toISOString(),
     }, { onConflict: "fabric_lead_id" });
     if (upErr) throw upErr;
+
+    if (finalStatus === "qualified") {
+      const { error: syncError } = await supabase.functions.invoke("sync-qualified-crm-leads", {
+        body: { lead_id },
+      });
+      if (syncError) {
+        console.error("Qualified lead queued; immediate CRM delivery failed:", syncError.message);
+      }
+    }
 
     return new Response(JSON.stringify({ success: true, status: finalStatus, score: finalScore }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

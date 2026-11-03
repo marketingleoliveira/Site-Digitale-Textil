@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Clock, Headphones, ChevronDown } from "lucide-react";
-import logoColor from "@/assets/logo-color.png";
+import logoColor from "@/assets/logo-color-header.webp";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
@@ -24,8 +23,8 @@ export function Header() {
 
   const navigation: NavItem[] = [
     { name: t("nav.home"), href: "/" },
-    { 
-      name: t("nav.about"), 
+    {
+      name: t("nav.about"),
       href: "/sobre",
       children: [
         { name: t("nav.about"), href: "/sobre" },
@@ -35,9 +34,10 @@ export function Header() {
     },
     { name: t("nav.fabrics"), href: "/tecidos" },
     { name: t("nav.prints"), href: "/estampas" },
-    
+
     { name: t("nav.careers"), href: "/trabalhe-conosco" },
     { name: "RADAR DIGITALE", href: "/radar-digitale" },
+    { name: t("nav.blog"), href: "/blog" },
   ];
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function Header() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-9 md:h-10">
             <div className="flex items-center gap-4 md:gap-6">
-              <a 
+              <a
                 href={commercialWhatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -79,8 +79,8 @@ export function Header() {
       {/* Main Header */}
       <header
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? "bg-white shadow-lg py-2" 
+          isScrolled
+            ? "bg-white shadow-lg py-2"
             : "bg-white/95 backdrop-blur-md py-3 md:py-4"
         }`}
       >
@@ -89,10 +89,10 @@ export function Header() {
             {/* Logo + Depoimentos Button */}
             <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
               <Link to="/" className="flex-shrink-0">
-                <img 
-                  src={logoColor} 
-                  alt="Digitale Têxtil" 
-                  className={`transition-all duration-300 ${isScrolled ? "h-10 md:h-12" : "h-11 md:h-14 lg:h-16"}`} 
+                <img
+                  src={logoColor}
+                  alt="Digitale Têxtil"
+                  className={`transition-all duration-300 ${isScrolled ? "h-10 md:h-12" : "h-11 md:h-14 lg:h-16"}`}
                 />
               </Link>
               <Link
@@ -112,8 +112,8 @@ export function Header() {
             <nav className="hidden lg:flex items-center">
               {navigation.map((item) => (
                 item.children ? (
-                  <div 
-                    key={item.name} 
+                  <div
+                    key={item.name}
                     className="relative group"
                     onMouseEnter={() => setOpenSubmenu(item.name)}
                     onMouseLeave={() => setOpenSubmenu(null)}
@@ -128,13 +128,9 @@ export function Header() {
                       {item.name}
                       <ChevronDown className={`h-4 w-4 transition-transform ${openSubmenu === item.name ? 'rotate-180' : ''}`} />
                     </button>
-                    <AnimatePresence>
+
                       {openSubmenu === item.name && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2 }}
+                          <div
                             className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-border py-2 min-w-[180px] z-50"
                           >
                             {item.children.map((child) => (
@@ -150,9 +146,9 @@ export function Header() {
                                 {child.name}
                               </Link>
                             ))}
-                          </motion.div>
+                          </div>
                       )}
-                    </AnimatePresence>
+
                   </div>
                 ) : (
                   <Link
@@ -207,17 +203,14 @@ export function Header() {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
+
           {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+            <div
               className="lg:hidden bg-white border-t border-border overflow-hidden"
             >
               <nav className="container mx-auto px-4 py-4">
                 {/* WhatsApp Link for Mobile */}
-                <a 
+                <a
                   href={commercialWhatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -226,7 +219,7 @@ export function Header() {
                   <WhatsAppIcon className="h-4 w-4" />
                   <span>Falar com Comercial</span>
                 </a>
-                
+
                 {navigation.map((item) => (
                   item.children ? (
                     <div key={item.name}>
@@ -241,12 +234,9 @@ export function Header() {
                         {item.name}
                         <ChevronDown className={`h-4 w-4 transition-transform ${openSubmenu === item.name ? 'rotate-180' : ''}`} />
                       </button>
-                      <AnimatePresence>
+
                         {openSubmenu === item.name && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
+                          <div
                             className="overflow-hidden bg-muted/30"
                           >
                             {item.children.map((child) => (
@@ -261,9 +251,9 @@ export function Header() {
                                 {child.name}
                               </Link>
                             ))}
-                          </motion.div>
+                          </div>
                         )}
-                      </AnimatePresence>
+
                     </div>
                   ) : (
                     <Link
@@ -286,9 +276,9 @@ export function Header() {
                   {t("cta.button")}
                 </Link>
               </nav>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+
       </header>
     </>
   );

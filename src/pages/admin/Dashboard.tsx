@@ -1,3 +1,4 @@
+import SiteBackupStatus from "@/components/admin/SiteBackupStatus";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FileText, FolderOpen, MessageSquare, Eye, TrendingUp, Users } from "lucide-react";
@@ -80,6 +81,7 @@ const Dashboard = () => {
 
   return (
     <AdminLayout title="Dashboard">
+      <SiteBackupStatus />
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
         {statCards.map((stat, index) => (

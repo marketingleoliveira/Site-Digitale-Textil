@@ -228,12 +228,7 @@ const BlogPost = () => {
             <p className="text-muted-foreground mb-8">
               {t("blog.postNotFoundDesc")}
             </p>
-            <Link to="/blog">
-              <Button>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {t("blog.backToBlog")}
-              </Button>
-            </Link>
+            
           </div>
         </main>
         <Footer />
@@ -301,9 +296,7 @@ const BlogPost = () => {
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link to="/blog" className="hover:text-white transition-colors">
-                  Blog
-                </Link>
+                
                 <ChevronRight className="h-4 w-4" />
                 <span className="text-white/80 truncate max-w-[200px]">
                   {post.title}
@@ -368,12 +361,7 @@ const BlogPost = () => {
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto">
               <div className="flex justify-between items-center mb-8">
-                <Link to="/blog">
-                  <Button variant="ghost" size="sm">
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    {t("blog.backToBlog")}
-                  </Button>
-                </Link>
+                
                 <Button variant="outline" size="sm" onClick={handleShare}>
                   <Share2 className="mr-2 h-4 w-4" />
                   {t("blog.share")}

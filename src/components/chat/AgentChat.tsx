@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useLocation } from "react-router-dom";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { trackEvent, getTrackingVisitorKey } from "@/lib/tracking";
 
 interface Message {
   id: string;
@@ -25,12 +26,12 @@ const PAGE_CONFIGS: Record<
   tecidos: {
     context: "tecidos",
     greeting: (n) =>
-      `Oi! Aqui é o ${n}, consultor de tecidos da Digitale. 😊 Vi que você tá olhando nossa linha de tecidos — qual segmento da sua marca/confecção (fitness, moda íntima, praia, esportivo, profissional)?`,
+      `Oi! Aqui é o ${n}, assistente virtual comercial da Digitale. 😊 Vi que você tá olhando nossa linha de tecidos — qual segmento da sua marca/confecção (fitness, moda íntima, praia, esportivo, profissional)?`,
   },
   estampas: {
     context: "estampas",
     greeting: (n) =>
-      `Oi! Aqui é o ${n}, consultor de estampas da Digitale. 🎨 Tô vendo que você curte nossa cartela de estampas — você procura algo pra qual coleção/segmento (fitness, praia, moda íntima)?`,
+      `Oi! Aqui é o ${n}, assistente virtual comercial da Digitale. 🎨 Tô vendo que você curte nossa cartela de estampas — você procura algo pra qual coleção/segmento (fitness, praia, moda íntima)?`,
   },
 };
 
@@ -138,7 +139,7 @@ export function AgentChat() {
     // Fase 1: "pensando" — pausa curta antes de aparecer "digitando..."
     // Quanto mais longa a resposta, mais ele "pensa" (lê pergunta, pondera).
     const len = text.length;
-    const thinkMs = Math.min(3500, 1200 + Math.random() * 800 + len * 8);
+    const thinkMs = Math.min(900, 300 + Math.random() * 250 + len * 2);
 
     setTimeout(() => {
       // Fase 2: indicador de "digitando..." com tempo proporcional ao tamanho do texto
@@ -146,8 +147,8 @@ export function AgentChat() {
       // Usamos ~55ms/char + variação para parecer natural, com piso e teto
       setIsTyping(true);
       const typingMs = Math.max(
-        minDelay + 600,
-        Math.min(12000, len * (speedMs + 25) + Math.random() * 600)
+        minDelay,
+        Math.min(1800, len * (speedMs + 5) + Math.random() * 250)
       );
 
       setTimeout(() => {
@@ -189,6 +190,7 @@ export function AgentChat() {
         body: {
           conversation_id: conversationIdRef.current,
           session_id: getSessionId(),
+            visitor_key: getTrackingVisitorKey(),
           message: text,
           page_url: window.location.href,
           user_agent: navigator.userAgent,
@@ -207,7 +209,7 @@ export function AgentChat() {
       sendBlocks(blocks, data?.typing_speed_ms, data?.min_typing_delay_ms);
     } catch (e) {
       sendBlocks([
-        "Opa, tive um problema técnico aqui! Pode chamar a gente direto no WhatsApp pra eu te atender?",
+        "Opa, tive um problema técnico aqui! Você pode chamar nosso time diretamente pelo WhatsApp.",
       ]);
     }
   }
@@ -220,14 +222,14 @@ export function AgentChat() {
       const len = b.length;
       // approximate total duration of this block (think + typing + reveal)
       const estimate =
-        Math.min(3500, 1200 + len * 8) +
-        Math.min(12000, len * ((speedMs || 25) + 25)) +
+        Math.min(900, 300 + len * 2) +
+        Math.min(1800, len * ((speedMs || 12) + 5)) +
         300;
       setTimeout(() => {
         simulateTyping(b, `b_${Date.now()}_${idx}`, speedMs, minDelay);
       }, acc);
       // small extra human pause between blocks (400-900ms) on top of the block estimate
-      acc += estimate + 500 + Math.random() * 400;
+      acc += estimate + 250 + Math.random() * 200;
     });
   }
 
@@ -245,8 +247,13 @@ export function AgentChat() {
   if (state !== "open") {
     return (
       <button
-        onClick={() => setState("open")}
-        aria-label="Abrir chat com vendedor"
+        onClick={() => {
+          void trackEvent("chat_open", {
+            metadata: { context: pageConfig?.context || null },
+          });
+          setState("open");
+        }}
+        aria-label="Abrir assistente virtual"
         className="fixed bottom-6 right-24 z-50 group flex items-center gap-2 bg-accent hover:bg-accent/90 text-white rounded-full pl-4 pr-5 py-3 shadow-xl shadow-accent/30 transition-all hover:scale-105"
       >
         <div className="relative">
@@ -259,7 +266,7 @@ export function AgentChat() {
           <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-30" />
         </div>
         <span className="text-sm font-medium hidden sm:inline">
-          Falar com representante
+          Falar com assistente
         </span>
       </button>
     );
@@ -312,14 +319,17 @@ export function AgentChat() {
                   : "bg-background text-foreground border border-border rounded-bl-sm shadow-sm"
               }`}
             >
-              {renderContent(m.content, () =>
+              {renderContent(m.content, () => {
+                void trackEvent("whatsapp_click", {
+                  metadata: { placement: "agent_chat" },
+                });
                 window.open(
                   whatsappLink(
                     "Olá! Vim pelo chat do site e gostaria de falar com um representante."
                   ),
                   "_blank"
-                )
-              )}
+                );
+              })}
             </div>
           </div>
         ))}

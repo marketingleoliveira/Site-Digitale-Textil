@@ -149,9 +149,14 @@ function FabricsContent() {
     const grouped = new Map<string, typeof fabrics>();
 
     categories.forEach((category) => {
-      const categoryFabrics = fabrics.filter((f) => 
-        f.fabric_category_assignments?.some((a: any) => a.category_id === category.id)
+      const categoryFabrics = fabrics.filter((f: any) =>
+        Array.isArray(f.fabric_category_assignments) &&
+        f.fabric_category_assignments.some(
+          (a: any) =>
+            String(a.category_id) === String(category.id)
+        )
       );
+
       if (categoryFabrics.length > 0) {
         grouped.set(category.id, categoryFabrics);
       }

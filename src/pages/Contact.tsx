@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { identifyAndTrack } from "@/lib/tracking";
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -84,6 +85,14 @@ const Contact = () => {
     if (error) {
       toast.error(t("contact.form.error"));
     } else {
+      void identifyAndTrack("contact_submit", {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.company,
+      }, {
+        metadata: { source_form: "contact" },
+      });
       setSubmitted(true);
       toast.success(t("contact.form.successToast"));
     }

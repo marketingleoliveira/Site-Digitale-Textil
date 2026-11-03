@@ -26,7 +26,7 @@ interface AdminLayoutProps {
   title: string;
 }
 
-import { Mail, Quote, Briefcase, FileCheck, ShieldCheck, Flame, Target, Layers, Lightbulb, Cpu } from "lucide-react";
+import { Mail, Quote, Briefcase, FileCheck, ShieldCheck, Flame, Target, Layers, Lightbulb, Cpu, ChartNoAxesCombined } from "lucide-react";
 
 type MenuItem = {
   icon: any;
@@ -47,6 +47,7 @@ const menuItems: MenuItem[] = [
     children: [
       { icon: MessageSquare, label: "Leads Tecidos", href: "/admin/fabric-leads", allowedRoles: ["sdr", "vendedor"] },
       { icon: Bot, label: "Agente CRM", href: "/admin/agente-crm", adminOnly: true },
+      { icon: Target, label: "Prospecção IA", href: "/admin/prospeccao-ia", adminOnly: true },
       { icon: MessageSquare, label: "Agente Vendedor", href: "/admin/agente-vendedor", adminOnly: true },
       { icon: Flame, label: "Leads Agente", href: "/admin/agente-leads", adminOnly: true },
     ],
@@ -63,6 +64,7 @@ const menuItems: MenuItem[] = [
   { icon: Mail, label: "Newsletter", href: "/admin/newsletter", allowedRoles: ["sdr", "vendedor"] },
   { icon: FileText, label: "Radar Digitale", href: "/admin/radar", adminOnly: true },
   { icon: Lightbulb, label: "Sugestões Radar", href: "/admin/radar/sugestoes", adminOnly: true },
+  { icon: ChartNoAxesCombined, label: "Tracking Pixel", href: "/admin/tracking-pixel", adminOnly: true },
   { icon: Users, label: "Usuários", href: "/admin/users", adminOnly: true },
   { icon: ShieldCheck, label: "Permissões", href: "/admin/permissions", adminOnly: true },
   { icon: Settings, label: "Configurações", href: "/admin/settings", adminOnly: true },

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
-import { User, Session } from "@supabase/supabase-js";
+import { User, Session } from "@/integrations/supabase/client";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 

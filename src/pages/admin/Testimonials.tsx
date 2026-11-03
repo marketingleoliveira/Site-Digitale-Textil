@@ -480,11 +480,37 @@ const Testimonials = () => {
 
       setEditingTestimonial(prev => prev ? { ...prev, video_url: publicUrl } : null);
       toast.success("Vídeo enviado!");
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao enviar vídeo");
+    } catch (error: any) {
+
+      console.error(
+        "Erro no upload do vídeo:",
+        error
+      );
+
+      const message =
+        error?.message
+        ||
+        error?.error?.message
+        ||
+        "Não foi possível enviar o vídeo";
+
+      toast.error(
+        "Erro ao enviar vídeo: "
+        +
+        message
+      );
+
     } finally {
-      setUploadingVideo(false);
+
+      setUploadingVideo(
+        false
+      );
+
+      /*
+       * Permite selecionar novamente
+       * o mesmo arquivo após um erro.
+       */
+      e.target.value = "";
     }
   };
 
@@ -597,7 +623,7 @@ const Testimonials = () => {
 
               {/* Video Upload */}
               <div className="space-y-2">
-                <Label>Vídeo do depoimento (opcional, máx 50MB)</Label>
+                <Label>Vídeo do depoimento (opcional)</Label>
                 {editingTestimonial?.video_url ? (
                   <div className="relative rounded-lg overflow-hidden border border-border bg-muted">
                     <video
@@ -621,7 +647,7 @@ const Testimonials = () => {
                       ) : (
                         <>
                           <Upload className="w-6 h-6 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">Clique para enviar vídeo (MP4, WebM, MOV)</span>
+                          <span className="text-sm text-muted-foreground">Clique para enviar vídeo (MP4, WebM, MOV — até 1 GB)</span>
                         </>
                       )}
                     </div>

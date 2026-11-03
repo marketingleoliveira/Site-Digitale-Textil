@@ -61,10 +61,7 @@ export function BlogPreview() {
             <span className="section-subtitle">{t("blog.label")}</span>
             <h2 className="section-title mt-3 md:mt-4">{t("blog.title")}</h2>
           </div>
-          <Link to="/blog" className="mt-4 md:mt-0 inline-flex items-center justify-center md:justify-start gap-2 text-accent font-semibold hover:gap-3 transition-all text-sm md:text-base">
-            {t("blog.viewAll")}
-            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-          </Link>
+          
         </motion.div>
 
         {loading ? (
@@ -160,10 +157,7 @@ export function BlogPreview() {
           <div className="text-center py-16">
             <Tag className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <p className="text-muted-foreground text-lg">{t("blog.noResults")}</p>
-            <Link to="/blog" className="mt-4 inline-flex items-center gap-2 text-accent font-semibold">
-              {t("blog.viewAll")}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            
           </div>
         )}
       </div>

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SEO } from "@/components/SEO";
@@ -5,8 +6,13 @@ import { JsonLd, ORGANIZATION_JSONLD } from "@/components/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { Products } from "@/components/sections/Products";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { Sustainability } from "@/components/sections/Sustainability";
 import { Clients } from "@/components/sections/Clients";
+
+const LazySustainability = lazy(() =>
+  import("@/components/sections/Sustainability").then((module) => ({
+    default: module.Sustainability,
+  })),
+);
 
 const Index = () => {
   return (
@@ -28,7 +34,9 @@ const Index = () => {
         <Hero />
         <Products />
         <Testimonials />
-        <Sustainability />
+        <Suspense fallback={null}>
+          <LazySustainability />
+        </Suspense>
         <Clients />
       </main>
       <Footer />

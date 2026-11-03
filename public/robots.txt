@@ -1,14 +1,28 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+
+# OpenAI Search / ChatGPT Search
+User-agent: OAI-SearchBot
+Allow: /
+
+# DIGITALE-AI-DISCOVERY-START
+
+# ChatGPT Search
+User-agent: OAI-SearchBot
+Allow: /
+
+# Requisições iniciadas por usuários do ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+
+# Ecossistema Gemini / Google
+User-agent: Google-Extended
+Allow: /
+
+
+# DIGITALE-AI-DISCOVERY-END
+
+Sitemap: https://digitaletextil.com.br/sitemap.xml

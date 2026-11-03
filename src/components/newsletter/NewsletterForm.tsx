@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { identifyAndTrack } from "@/lib/tracking";
 
 export function NewsletterForm() {
   const { t } = useLanguage();
@@ -35,6 +36,9 @@ export function NewsletterForm() {
           throw error;
         }
       } else {
+        void identifyAndTrack("newsletter_submit", { email }, {
+          metadata: { source_form: "newsletter_footer" },
+        });
         setSubscribed(true);
         toast.success(t("newsletter.success"));
       }

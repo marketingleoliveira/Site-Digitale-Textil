@@ -383,3 +383,24 @@ html {
   animation: cloud-marquee-rtl-anim linear infinite;
   width: max-content;
 }
+
+
+/* DIGITALE_REMOVE_BLOG_MENU_START */
+
+/*
+ * Blog permanece acessivel diretamente em /blog,
+ * mas nao aparece como item de navegacao.
+ */
+header a[href="/blog"],
+header a[href="/blog/"],
+nav a[href="/blog"],
+nav a[href="/blog/"],
+[role="navigation"] a[href="/blog"],
+[role="navigation"] a[href="/blog/"],
+a[href="/blog"],
+a[href="/blog/"] {
+    display: none !important;
+}
+
+/* DIGITALE_REMOVE_BLOG_MENU_END */
+

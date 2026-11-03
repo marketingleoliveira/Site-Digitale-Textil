@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock, CheckCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { identifyAndTrack } from "@/lib/tracking";
 
 interface FabricLeadFormProps {
   fabricId: string;
@@ -67,6 +68,20 @@ export function FabricLeadForm({ fabricId, fabricName, fabricSlug }: FabricLeadF
       toast.error("Erro ao enviar. Tente novamente.");
       return;
     }
+
+    void identifyAndTrack("fabric_lead_submit", {
+      email,
+      whatsapp: cleanWhatsapp,
+      cnpj: cleanCnpj,
+    }, {
+      entityType: "fabric",
+      entitySlug: fabricSlug,
+      metadata: {
+        fabric_id: fabricId,
+        fabric_name: fabricName,
+      },
+    });
+
     setSubmitted(true);
   };
 

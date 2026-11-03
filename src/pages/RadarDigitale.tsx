@@ -28,6 +28,7 @@ interface RadarCategory {
   id: string;
   name: string;
   slug: string;
+  is_active: boolean | number;
 }
 
 interface RadarEdition {
@@ -55,6 +56,40 @@ const formatViews = (n: number): string => {
   return n.toString();
 };
 
+
+
+const RADAR_VISITOR_KEY =
+  "digitale_radar_visitor_v1";
+
+const getRadarVisitorId = (): string => {
+  try {
+    const saved =
+      localStorage.getItem(
+        RADAR_VISITOR_KEY
+      );
+
+    if (saved) return saved;
+
+    const value =
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `radar-${Date.now()}-${Math.random()
+            .toString(36)
+            .slice(2)}`;
+
+    localStorage.setItem(
+      RADAR_VISITOR_KEY,
+      value
+    );
+
+    return value;
+  } catch {
+    return `radar-${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2)}`;
+  }
+};
 
 const RadarDigitale = () => {
   const queryClient = useQueryClient();
@@ -191,9 +226,9 @@ const RadarDigitale = () => {
     },
   });
 
-  // Only show categories that have at least one edition
-  const categoriesWithEditions = categories.filter((cat) =>
-    editions.some((e) => e.category_id === cat.id)
+  // Show every active category, even without editions.
+  const categoriesWithEditions = categories.filter(
+    (cat) => Boolean(cat.is_active)
   );
 
   // The "first" edition in the admin order — gets the NOVO badge
@@ -221,14 +256,31 @@ const RadarDigitale = () => {
 
   const likeMutation = useMutation({
     mutationFn: async (editionId: string) => {
-      const { data, error } = await supabase.functions.invoke("radar-like", {
-        body: { edition_id: editionId },
-      });
-      if (error) throw error;
-      if (!data || typeof data.liked !== "boolean") {
-        throw new Error("Resposta inválida ao processar curtida");
+      const res = await fetch(
+        "/api/functions/radar-like",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            edition_id: editionId,
+            visitor_id: getRadarVisitorId(),
+          }),
+        }
+      );
+
+      const data =
+        await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(
+          data?.error ||
+            "Erro ao processar curtida"
+        );
       }
-      return data as { liked: boolean; likes: number };
+
+      return data;
     },
     onSuccess: (data, editionId) => {
       setLikedEditions((prev) => {
@@ -242,10 +294,6 @@ const RadarDigitale = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["radar-editions"] });
     },
-    onError: (error) => {
-      console.error("Erro ao registrar curtida:", error);
-      toast.error("Não foi possível registrar sua curtida.");
-    },
   });
 
   const reactionMutation = useMutation({
@@ -256,15 +304,36 @@ const RadarDigitale = () => {
       editionId: string;
       reaction: "happy" | "sad";
     }) => {
-      const { data, error } = await supabase.functions.invoke("radar-reaction", {
-        body: { edition_id: editionId, reaction },
-      });
-      if (error) throw error;
-      if (!data || !("reaction" in data)) {
-        throw new Error("Resposta inválida ao registrar reação");
+      const res = await fetch(
+        "/api/functions/radar-reaction",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            edition_id: editionId,
+            reaction,
+            visitor_id: getRadarVisitorId(),
+          }),
+        }
+      );
+
+      const data =
+        await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(
+          data?.error ||
+            "Erro ao registrar reação"
+        );
       }
+
       return data as {
-        reaction: "happy" | "sad" | null;
+        reaction:
+          | "happy"
+          | "sad"
+          | null;
         happy_count: number;
         sad_count: number;
       };

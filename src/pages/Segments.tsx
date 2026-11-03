@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { trackEvent } from "@/lib/tracking";
 
 // Fallback images
 import segmentPraiaImg from "@/assets/segment-praia.jpg";
@@ -124,7 +125,17 @@ const Segments = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       className="group cursor-pointer"
-                      onClick={() => setSelectedSegment(selectedSegment === segment.id ? null : segment.id)}
+                      onClick={() => {
+                        const opening = selectedSegment !== segment.id;
+                        if (opening) {
+                          void trackEvent("segment_interest", {
+                            entityType: "segment",
+                            entitySlug: segment.slug,
+                            metadata: { name: segment.name },
+                          });
+                        }
+                        setSelectedSegment(opening ? segment.id : null);
+                      }}
                     >
                       <div className={`relative rounded-3xl overflow-hidden transition-all duration-500 ${
                         selectedSegment === segment.id 

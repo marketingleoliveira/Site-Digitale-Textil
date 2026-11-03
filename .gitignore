@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+/.env
+
+# Arquivo legado preservado apenas na VPS
+/backend/legacy/supabase-functions/create-admin-user/index.ts
+
+/supabase/functions/create-admin-user/index.ts

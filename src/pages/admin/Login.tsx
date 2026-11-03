@@ -28,16 +28,21 @@ const Login = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { error } = await signIn(email, password);
+    try {
+      const { error } = await signIn(email, password);
 
-    if (error) {
-      toast.error("Erro ao fazer login", {
-        description: "Verifique suas credenciais e tente novamente."
-      });
+      if (error) {
+        toast.error("Erro ao fazer login", {
+          description: "Verifique suas credenciais e tente novamente."
+        });
+      } else {
+        toast.success("Login realizado com sucesso!");
+        // The auth subscription loads roles before the effect redirects.
+      }
+    } catch {
+      toast.error("Não foi possível fazer login. Tente novamente.");
+    } finally {
       setSubmitting(false);
-    } else {
-      toast.success("Login realizado com sucesso!");
-      // useEffect above will handle redirect once roles are loaded
     }
   };
 

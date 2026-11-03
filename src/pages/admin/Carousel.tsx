@@ -20,6 +20,53 @@ interface CarouselSlide {
   is_active: boolean;
 }
 
+// DIGITALE_CAROUSEL_WEBP_UPLOAD_V1
+async function optimizeCarouselUpload(file: File): Promise<File> {
+  if (file.type === "image/webp") {
+    return file;
+  }
+
+  try {
+    const bitmap = await createImageBitmap(file);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      bitmap.close();
+      return file;
+    }
+
+    context.drawImage(bitmap, 0, 0);
+    bitmap.close();
+
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, "image/webp", 0.9);
+    });
+
+    if (!blob || blob.size >= file.size) {
+      return file;
+    }
+
+    const baseName =
+      file.name.replace(/\.[^/.]+$/, "") || "carousel";
+
+    return new File(
+      [blob],
+      `${baseName}.webp`,
+      {
+        type: "image/webp",
+        lastModified: Date.now(),
+      },
+    );
+  } catch {
+    return file;
+  }
+}
+
 export default function Carousel() {
   const { invalidateCarousel } = useInvalidateCache();
   const [uploading, setUploading] = useState(false);
@@ -91,12 +138,13 @@ export default function Carousel() {
     setUploading(true);
 
     try {
-      const fileExt = file.name.split(".").pop();
+      const uploadFile = await optimizeCarouselUpload(file);
+      const fileExt = uploadFile.name.split(".").pop() || "webp";
       const fileName = `${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from("carousel")
-        .upload(fileName, file);
+        .upload(fileName, uploadFile);
 
       if (uploadError) throw uploadError;
 

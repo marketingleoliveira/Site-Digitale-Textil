@@ -112,6 +112,22 @@ const Privacy = () => {
                   </div>
 
                   <div className="space-y-6">
+                    <div className="bg-muted/30 rounded-xl p-6 border border-border">
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-primary/10 rounded-lg">
+                          <Eye className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-foreground mb-3">
+                            Dados de navegação e Tracking Pixel
+                          </h3>
+                          <p className="text-muted-foreground leading-relaxed">
+                            Utilizamos tecnologia própria de análise para registrar, de forma pseudonimizada, páginas visitadas, origem da navegação, campanhas UTM, interações com tecidos, formulários, chat e WhatsApp, além de informações gerais de dispositivo e navegador. Não armazenamos o endereço IP nesse sistema. Algumas áreas comerciais do site exigem identificação por nome, empresa, e-mail, WhatsApp e CNPJ para acesso ao conteúdo. Quando esses dados são informados, o histórico de navegação do mesmo navegador é associado ao contato para atendimento comercial, análise de interesse e melhoria da experiência no site.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
                     {privacySections.map((section, index) => (
                       <motion.div
                         key={section.title}

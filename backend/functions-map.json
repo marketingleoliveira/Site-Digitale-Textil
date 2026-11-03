@@ -1,0 +1,58 @@
+{
+  "sync-qualified-crm-leads": {
+    "name": "sync-qualified-crm-leads",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/sync-qualified-crm-leads/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": true,
+    "uses_deno_env": true
+  },
+  "chat-agent": {
+    "name": "chat-agent",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/chat-agent/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": true,
+    "uses_deno_env": true
+  },
+  "radar-reaction": {
+    "name": "radar-reaction",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/radar-reaction/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": false,
+    "uses_deno_env": true
+  },
+  "simulate-agent-conversation": {
+    "name": "simulate-agent-conversation",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/simulate-agent-conversation/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": true,
+    "uses_deno_env": true
+  },
+  "create-admin-user": {
+    "name": "create-admin-user",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/create-admin-user/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": false,
+    "uses_deno_env": true
+  },
+  "radar-like": {
+    "name": "radar-like",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/radar-like/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": false,
+    "uses_deno_env": true
+  },
+  "validate-lead": {
+    "name": "validate-lead",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/validate-lead/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": true,
+    "uses_deno_env": true
+  },
+  "create-user": {
+    "name": "create-user",
+    "source": "/var/www/Site-Digitale-Textil/supabase/functions/create-user/index.ts",
+    "uses_supabase": true,
+    "uses_fetch": false,
+    "uses_deno_env": true
+  }
+}

@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/tracking";
 
 import badgeAloeVera from "@/assets/tech-badges/aloe-vera.webp";
 import badgeUV50 from "@/assets/tech-badges/uv50.webp";
@@ -210,7 +211,14 @@ const Technologies = () => {
                         "group relative flex flex-col sm:flex-row items-center sm:items-start gap-8 rounded-[2.5rem] bg-white p-10 sm:p-12",
                         "shadow-[0_15px_50px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer"
                       )}
-                      onClick={() => setSelected(tech)}
+                      onClick={() => {
+                        void trackEvent("technology_interest", {
+                          entityType: "technology",
+                          entitySlug: tech.slug || tech.name,
+                          metadata: { name: tech.name },
+                        });
+                        setSelected(tech);
+                      }}
                     >
                       {/* Logo Circular */}
                       <div 
@@ -393,6 +401,13 @@ const Technologies = () => {
                   <Button asChild className="w-full rounded-full bg-[#FF8A00] py-8 text-xl font-bold hover:bg-[#FF8A00]/90 shadow-xl">
                     <a
                       href={whatsappLink(`Tenho interesse na tecnologia ${selected?.name} para meus produtos.`)}
+                      onClick={() => {
+                        void trackEvent("whatsapp_click", {
+                          entityType: "technology",
+                          entitySlug: selected?.slug || selected?.name,
+                          metadata: { placement: "technology_sample" },
+                        });
+                      }}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +12,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import logoColor from "@/assets/logo-color.png";
+import logoColor from "@/assets/logo-color-header.webp";
+import { identifyAndTrack } from "@/lib/tracking";
 
 const POPUP_STORAGE_KEY = "newsletter_popup_shown";
 const POPUP_DELAY = 5000; // 5 seconds
@@ -28,7 +28,7 @@ export function NewsletterPopup() {
   useEffect(() => {
     // Check if popup was already shown
     const hasShown = localStorage.getItem(POPUP_STORAGE_KEY);
-    
+
     if (!hasShown) {
       const timer = setTimeout(() => {
         setIsOpen(true);
@@ -41,7 +41,7 @@ export function NewsletterPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes("@")) {
       toast.error(t("newsletter.invalidEmail"));
       return;
@@ -62,6 +62,9 @@ export function NewsletterPopup() {
           throw error;
         }
       } else {
+        void identifyAndTrack("newsletter_submit", { email }, {
+          metadata: { source_form: "newsletter_popup" },
+        });
         setSubscribed(true);
         toast.success(t("newsletter.success"));
         setTimeout(() => setIsOpen(false), 2000);
@@ -91,12 +94,9 @@ export function NewsletterPopup() {
           </DialogDescription>
         </DialogHeader>
 
-        <AnimatePresence mode="wait">
           {subscribed ? (
-            <motion.div
+            <div
               key="success"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center gap-3 py-6"
             >
               <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -105,12 +105,10 @@ export function NewsletterPopup() {
               <p className="text-lg font-medium text-primary-foreground">
                 {t("newsletter.thanks")}
               </p>
-            </motion.div>
+            </div>
           ) : (
-            <motion.form
+            <form
               key="form"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
               onSubmit={handleSubmit}
               className="space-y-4 mt-4"
             >
@@ -139,9 +137,9 @@ export function NewsletterPopup() {
               <p className="text-xs text-center text-primary-foreground/60">
                 {t("newsletter.privacy")}
               </p>
-            </motion.form>
+            </form>
           )}
-        </AnimatePresence>
+
       </DialogContent>
     </Dialog>
   );

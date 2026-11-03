@@ -35,6 +35,7 @@ export function Footer() {
       { name: t("nav.sustainability"), href: "/sustentabilidade" },
       { name: "Radar Digitale", href: "/radar-digitale" },
       { name: t("nav.contact"), href: "/contato" },
+      { name: t("nav.blog"), href: "/blog" },
     ],
     produtos: [
       { name: "Milano", href: "/tecidos/milano" },
@@ -167,12 +168,12 @@ export function Footer() {
               >
                 {t("footer.privacy")}
               </Link>
-              <Link 
-                to="/admin" 
+              <a
+                href="/admin/login"
                 className="text-white/30 hover:text-white/60 transition-colors"
               >
                 {t("footer.admin")}
-              </Link>
+              </a>
             </div>
           </div>
         </div>
