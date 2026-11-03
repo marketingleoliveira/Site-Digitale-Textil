@@ -53,6 +53,38 @@ interface RichTextEditorProps {
   placeholder?: string;
 }
 
+const ToolbarButton = ({
+  onClick,
+  isActive,
+  disabled,
+  icon: Icon,
+  tooltip,
+}: {
+  onClick: () => void;
+  isActive?: boolean;
+  disabled?: boolean;
+  icon: React.ElementType;
+  tooltip: string;
+}) => (
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Toggle
+        size="sm"
+        pressed={isActive}
+        onMouseDown={(event) => event.preventDefault()}
+      onPressedChange={onClick}
+        disabled={disabled}
+        className="data-[state=on]:bg-accent data-[state=on]:text-white"
+      >
+        <Icon className="h-4 w-4" />
+      </Toggle>
+    </TooltipTrigger>
+    <TooltipContent side="bottom">
+      <p>{tooltip}</p>
+    </TooltipContent>
+  </Tooltip>
+);
+
 export function RichTextEditor({ content, onChange, placeholder }: RichTextEditorProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadType, setUploadType] = useState<"image" | "video" | null>(null);
@@ -230,41 +262,10 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
     }
   };
 
-  const ToolbarButton = ({
-    onClick,
-    isActive,
-    disabled,
-    icon: Icon,
-    tooltip,
-  }: {
-    onClick: () => void;
-    isActive?: boolean;
-    disabled?: boolean;
-    icon: React.ElementType;
-    tooltip: string;
-  }) => (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Toggle
-          size="sm"
-          pressed={isActive}
-          onPressedChange={onClick}
-          disabled={disabled}
-          className="data-[state=on]:bg-accent data-[state=on]:text-white"
-        >
-          <Icon className="h-4 w-4" />
-        </Toggle>
-      </TooltipTrigger>
-      <TooltipContent side="bottom">
-        <p>{tooltip}</p>
-      </TooltipContent>
-    </Tooltip>
-  );
-
   return (
-    <div className="border border-border rounded-xl overflow-hidden bg-background">
+    <div className="border border-border rounded-xl overflow-visible bg-background">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-border bg-muted/50">
+      <div className="sticky top-0 z-30 flex flex-wrap items-center gap-1 p-2 border-b border-border bg-background shadow-sm rounded-t-xl">
         {/* Undo/Redo */}
         <ToolbarButton
           onClick={() => editor.chain().focus().undo().run()}

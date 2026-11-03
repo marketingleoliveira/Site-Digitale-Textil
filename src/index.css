@@ -404,3 +404,52 @@ a[href="/blog/"] {
 
 /* DIGITALE_REMOVE_BLOG_MENU_END */
 
+
+
+/* DIGITALE_POSTS_LISTAS_START */
+
+/* Editor Tiptap: listas numeradas */
+.ProseMirror ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+/* Editor Tiptap: listas com marcadores */
+.ProseMirror ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+/* Itens das listas */
+.ProseMirror li {
+  display: list-item;
+  padding-left: 0.25rem;
+  margin: 0.25rem 0;
+}
+
+.ProseMirror li p {
+  margin: 0;
+}
+
+/* Listas aninhadas */
+.ProseMirror ol ol {
+  list-style-type: lower-alpha;
+}
+
+.ProseMirror ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.ProseMirror ul ul {
+  list-style-type: circle;
+}
+
+.ProseMirror li::marker {
+  color: hsl(var(--accent));
+}
+
+/* DIGITALE_POSTS_LISTAS_END */
