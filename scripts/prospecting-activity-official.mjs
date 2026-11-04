@@ -135,10 +135,17 @@ function sameDomain(
 }
 
 
+const blockedDomainsThisRun = new Set();
+
 async function fetchPage(
   url,
   timeout = 6000
 ) {
+  const hostname = new URL(url).hostname.toLowerCase();
+
+  if (blockedDomainsThisRun.has(hostname)) {
+    return null;
+  }
   const controller =
     new AbortController();
 
@@ -171,6 +178,22 @@ async function fetchPage(
       );
 
     if (!response.ok) {
+      if (response.status === 403) {
+        const blockedHostname =
+          new URL(response.url || url)
+            .hostname
+            .toLowerCase();
+
+        blockedDomainsThisRun.add(hostname);
+        blockedDomainsThisRun.add(blockedHostname);
+
+        console.warn(
+          "ACTIVITY_ACCESS_BLOCKED",
+          blockedHostname,
+          "HTTP_403"
+        );
+      }
+
       return null;
     }
 
@@ -1147,6 +1170,7 @@ const [candidates] =
         AND textile_relevance_verified = 1
 
         AND recent_activity_verified = 0
+        AND cnpj = '78857802000100'
 
       ORDER BY
         confidence_score DESC,

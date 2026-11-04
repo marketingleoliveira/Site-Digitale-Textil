@@ -811,8 +811,36 @@ export async function recalculateCandidate(candidateId) {
       : missingGates.join(",");
 
 
+  // Recuperacao segura: somente rejeicoes por evidencias.
+  const recoverableReasons = new Set([
+    "company_verified",
+    "icp_verified",
+    "contact_verified",
+    "validated_phone_required",
+    "recent_activity_verified",
+    "intent_verified",
+    "textile_relevance_verified",
+    "second_validation_passed",
+    "insufficient_evidence",
+  ]);
+
+  const reasons = String(
+    candidate.rejection_reason || ""
+  )
+    .split(",")
+    .map(value => value.trim())
+    .filter(Boolean);
+
+  const recoverable =
+    candidate.source_origin === "IA_PROSPECCAO"
+    && reasons.length > 0
+    && reasons.every(reason =>
+      recoverableReasons.has(reason)
+    );
+
   const nextStatus =
     candidate.status === "rejected"
+    && !(recoverable && allHardGates)
       ? "rejected"
       : allHardGates
         ? "qualified"

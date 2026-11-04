@@ -1843,8 +1843,9 @@ async function run() {
           [source.id]
         );
       } else {
-        rejected = true;
+        rejected = false;
 
+        // DIGITALE_EVIDENCE_PENDING_V1
         const missing =
           Object.entries(
             evaluation?.hard_gates || {}
@@ -1862,7 +1863,7 @@ async function run() {
           `
             UPDATE prospecting_candidates
             SET
-              status = 'rejected',
+              status = 'validating',
               rejection_reason = ?
             WHERE id = ?
           `,
@@ -1878,7 +1879,7 @@ async function run() {
             UPDATE prospecting_source_pool
             SET
               source_status =
-                'rejected',
+                'review_pending',
               rejection_reason = ?
             WHERE id = ?
           `,

@@ -128,15 +128,7 @@ SET
 WHERE local_date='${LOCAL_DATE}';
 
 
-UPDATE prospecting_daily_runs
-SET
-  candidates_rejected=
-    GREATEST(
-      candidates_checked
-      - candidates_qualified,
-      0
-    )
-WHERE local_date='${LOCAL_DATE}';
+
 "
 
 
@@ -417,15 +409,7 @@ SET
 WHERE local_date='${LOCAL_DATE}';
 
 
-UPDATE prospecting_daily_runs
-SET
-  candidates_rejected=
-    GREATEST(
-      candidates_checked
-      - candidates_qualified,
-      0
-    )
-WHERE local_date='${LOCAL_DATE}';
+
 "
 
 
