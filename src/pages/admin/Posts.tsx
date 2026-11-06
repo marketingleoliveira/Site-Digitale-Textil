@@ -29,6 +29,7 @@ import { toast } from "sonner";
 interface Post {
   id: string;
   title: string;
+  obs: string | null;
   slug: string;
   status: string;
   views: number;
@@ -49,7 +50,7 @@ const Posts = () => {
   const fetchPosts = async () => {
     const { data, error } = await supabase
       .from("blog_posts")
-      .select("id, title, slug, status, views, created_at, category:blog_categories(name)")
+      .select("id, title, obs, slug, status, views, created_at, category:blog_categories(name)")
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -113,7 +114,17 @@ const Posts = () => {
               <TableBody>
                 {filteredPosts.map((post) => (
                   <TableRow key={post.id}>
-                    <TableCell className="font-medium">{post.title}</TableCell>
+                    <TableCell>
+                      <div className="flex flex-col gap-1">
+                        <span className="font-medium">{post.title}</span>
+                        {post.obs?.trim() && (
+                          <p className="text-xs text-muted-foreground whitespace-pre-wrap break-words">
+                            <span className="font-semibold">OBS:</span>{" "}
+                            {post.obs}
+                          </p>
+                        )}
+                      </div>
+                    </TableCell>
                     <TableCell>{post.category?.name || "—"}</TableCell>
                     <TableCell>
                       <span

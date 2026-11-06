@@ -39,6 +39,7 @@ const PostEditor = () => {
     title: "",
     slug: "",
     excerpt: "",
+    obs: "",
     content: "",
     featured_image: "",
     category_id: "",
@@ -74,6 +75,7 @@ const PostEditor = () => {
         title: data.title || "",
         slug: data.slug || "",
         excerpt: data.excerpt || "",
+        obs: data.obs || "",
         content: data.content || "",
         featured_image: data.featured_image || "",
         category_id: data.category_id || "",
@@ -316,6 +318,18 @@ const PostEditor = () => {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="obs">OBS (Observações)</Label>
+                <Textarea
+                  id="obs"
+                  value={form.obs}
+                  onChange={(e) => setForm({ ...form, obs: e.target.value })}
+                  placeholder="Observações sobre esta publicação..."
+                  rows={4}
+                  className="resize-y"
+                />
               </div>
             </div>
 

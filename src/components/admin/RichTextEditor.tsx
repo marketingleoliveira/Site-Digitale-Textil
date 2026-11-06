@@ -1,5 +1,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Extension } from "@tiptap/core";
+import { Plugin } from "@tiptap/pm/state";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
@@ -85,6 +87,45 @@ const ToolbarButton = ({
   </Tooltip>
 );
 
+
+// Mantém a numeração contínua entre listas ordenadas
+// separadas por parágrafos ou outros blocos de conteúdo.
+const ContinuousOrderedList = Extension.create({
+  name: "continuousOrderedList",
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        appendTransaction: (transactions, _oldState, newState) => {
+          if (!transactions.some((tr) => tr.docChanged)) {
+            return null;
+          }
+
+          let nextNumber = 1;
+          const tr = newState.tr;
+
+          newState.doc.forEach((node, offset) => {
+            if (node.type.name !== "orderedList") {
+              return;
+            }
+
+            if (node.attrs.start !== nextNumber) {
+              tr.setNodeMarkup(offset, undefined, {
+                ...node.attrs,
+                start: nextNumber,
+              });
+            }
+
+            nextNumber += node.childCount;
+          });
+
+          return tr.docChanged ? tr : null;
+        },
+      }),
+    ];
+  },
+});
+
 export function RichTextEditor({ content, onChange, placeholder }: RichTextEditorProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadType, setUploadType] = useState<"image" | "video" | null>(null);
@@ -98,6 +139,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
           levels: [1, 2, 3],
         },
       }),
+      ContinuousOrderedList,
       Underline,
       Link.configure({
         openOnClick: false,
