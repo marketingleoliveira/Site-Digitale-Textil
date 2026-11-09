@@ -1,3 +1,18 @@
+
+// Tipos da autenticação local do Site Digitale.
+// Apenas declarações TypeScript: não alteram o login.
+export type User = {
+  id: string;
+  email?: string;
+  [key: string]: any;
+};
+
+export type Session = {
+  access_token: string;
+  user: User;
+  [key: string]: any;
+};
+
 const API = "/api";
 
 type Filter = {

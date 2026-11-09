@@ -1,6 +1,6 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Extension } from "@tiptap/core";
+import { Extension, Mark } from "@tiptap/core";
 import { Plugin } from "@tiptap/pm/state";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
@@ -31,6 +31,13 @@ import {
   Loader2,
   Video,
   Youtube as YoutubeIcon,
+  MoreHorizontal,
+  Palette,
+  Highlighter,
+  RemoveFormatting,
+  AlignJustify,
+  Smile,
+  Pilcrow,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
@@ -88,6 +95,45 @@ const ToolbarButton = ({
 );
 
 
+
+// blogFormatToolbarV2: formatação adicional de texto.
+const BlogTextStyle = Mark.create({
+  name: "blogTextStyle",
+
+  addAttributes() {
+    return {
+      color: {
+        default: null,
+        parseHTML: element => element.style.color || null,
+        renderHTML: attrs =>
+          attrs.color ? { style: `color: ${attrs.color}` } : {},
+      },
+      fontSize: {
+        default: null,
+        parseHTML: element => element.style.fontSize || null,
+        renderHTML: attrs =>
+          attrs.fontSize ? { style: `font-size: ${attrs.fontSize}` } : {},
+      },
+      backgroundColor: {
+        default: null,
+        parseHTML: element => element.style.backgroundColor || null,
+        renderHTML: attrs =>
+          attrs.backgroundColor
+            ? { style: `background-color: ${attrs.backgroundColor}` }
+            : {},
+      },
+    };
+  },
+
+  parseHTML() {
+    return [{ tag: "span[style]" }];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["span", HTMLAttributes, 0];
+  },
+});
+
 // Mantém a numeração contínua entre listas ordenadas
 // separadas por parágrafos ou outros blocos de conteúdo.
 const ContinuousOrderedList = Extension.create({
@@ -127,6 +173,10 @@ const ContinuousOrderedList = Extension.create({
 });
 
 export function RichTextEditor({ content, onChange, placeholder }: RichTextEditorProps) {
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [fontSize, setFontSize] = useState("16px");
+  const [textColor, setTextColor] = useState("#243447");
+  const [highlightColor, setHighlightColor] = useState("#fff2a8");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadType, setUploadType] = useState<"image" | "video" | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -140,6 +190,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
         },
       }),
       ContinuousOrderedList,
+      BlogTextStyle,
       Underline,
       Link.configure({
         openOnClick: false,
@@ -374,6 +425,108 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
 
         <Separator orientation="vertical" className="h-6 mx-1" />
 
+
+        {/* Ferramentas de formatação principais */}
+        <Separator orientation="vertical" className="h-6 mx-1" />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="button" variant="ghost" size="sm"
+              className="h-8 px-2 text-xs">
+              {fontSize} ▾
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            {["12px","14px","16px","18px","20px","24px","28px","32px"].map(size => (
+              <DropdownMenuItem key={size}
+                onSelect={() => {
+                  editor.chain().focus().setMark("blogTextStyle", {
+                    fontSize: size,
+                  }).run();
+                  setFontSize(size);
+                }}>
+                {size}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <label
+          title="Cor do texto"
+          className="relative flex items-center justify-center h-8 w-9 rounded-md hover:bg-accent cursor-pointer"
+          onMouseDown={event => event.preventDefault()}
+        >
+          <Palette className="w-4 h-4" />
+          <span className="absolute bottom-1 w-4 h-0.5"
+            style={{ backgroundColor: textColor }} />
+          <input type="color" value={textColor}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+            onChange={event => {
+              setTextColor(event.target.value);
+              editor.chain().focus().setMark("blogTextStyle", {
+                color: event.target.value,
+              }).run();
+            }} />
+        </label>
+
+        <label title="Realçar texto"
+          className="relative flex items-center justify-center h-8 w-9 rounded-md hover:bg-accent cursor-pointer"
+          onMouseDown={event => event.preventDefault()}>
+          <Highlighter className="w-4 h-4" />
+          <span className="absolute bottom-1 w-4 h-0.5"
+            style={{ backgroundColor: highlightColor }} />
+          <input type="color" value={highlightColor}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+            onChange={event => {
+              setHighlightColor(event.target.value);
+              editor.chain().focus().setMark("blogTextStyle", {
+                backgroundColor: event.target.value,
+              }).run();
+            }} />
+        </label>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="button" variant="ghost" size="sm"
+              className="h-8 px-2 text-xs gap-1">
+              <Pilcrow className="h-4 w-4" />
+              Parágrafo
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              onSelect={() => editor.chain().focus().setParagraph().run()}>
+              Parágrafo normal
+            </DropdownMenuItem>
+            {[1,2,3].map(level => (
+              <DropdownMenuItem key={level}
+                onSelect={() => editor.chain().focus().toggleHeading({
+                  level: level as 1 | 2 | 3,
+                }).run()}>
+                H{level}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Separator orientation="vertical" className="h-6 mx-1" />
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          title="Mais ferramentas"
+          aria-label="Mais ferramentas"
+          aria-expanded={moreOpen}
+          onMouseDown={event => event.preventDefault()}
+          onClick={() => setMoreOpen(!moreOpen)}
+          className="h-8 w-9"
+        >
+          <MoreHorizontal className="h-5 w-5" />
+        </Button>
+
+        {moreOpen && (
+          <div className="w-full flex flex-wrap items-center gap-1 border-t border-border pt-2 mt-2">
         {/* Alignment */}
         <ToolbarButton
           onClick={() => editor.chain().focus().setTextAlign("left").run()}
@@ -505,6 +658,45 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
           icon={Minus}
           tooltip="Linha horizontal"
         />
+
+            <Separator orientation="vertical" className="h-6 mx-1" />
+
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+              isActive={editor.isActive({ textAlign: "justify" })}
+              icon={AlignJustify}
+              tooltip="Justificar texto"
+            />
+
+            <ToolbarButton
+              onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
+              icon={RemoveFormatting}
+              tooltip="Limpar formatação"
+            />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button type="button" variant="ghost" size="icon"
+                  className="h-8 w-9" title="Inserir emoji">
+                  <Smile className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start"
+                className="grid grid-cols-6 gap-1 p-2">
+                {["😀","😊","😍","👏","👍","❤️",
+                  "✨","⭐","✅","💡","📌","🎯",
+                  "🌿","💪","🧠","🎉","📚","🚀"].map(emoji => (
+                  <DropdownMenuItem key={emoji}
+                    className="justify-center cursor-pointer text-lg p-1"
+                    onSelect={() => editor.chain().focus()
+                      .insertContent(emoji).run()}>
+                    {emoji}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </div>
 
       {/* Editor Content */}
