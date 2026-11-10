@@ -453,3 +453,1314 @@ a[href="/blog/"] {
 }
 
 /* DIGITALE_POSTS_LISTAS_END */
+
+/* DIGITALE_FOOTER_MOBILE_CENTER_V1 */
+@media (max-width: 767px) {
+
+  footer {
+    text-align: center !important;
+  }
+
+  footer .container,
+  footer .container > div,
+  footer .grid > div {
+    text-align: center !important;
+  }
+
+  footer .grid {
+    justify-items: center !important;
+  }
+
+  footer .grid > * {
+    width: 100%;
+    text-align: center !important;
+  }
+
+  footer .flex:not(.fixed) {
+    justify-content: center !important;
+  }
+
+  footer img:not(.fixed img) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  footer h2,
+  footer h3,
+  footer h4,
+  footer p {
+    text-align: center !important;
+  }
+
+  footer a:not(.fixed a) {
+    text-align: center;
+  }
+
+  footer ul,
+  footer li {
+    text-align: center !important;
+  }
+
+  footer ul {
+    padding-left: 0;
+  }
+}
+
+
+/* DIGITALE_SUSTAINABILITY_MOBILE_CENTER_V1 */
+@media (max-width: 767px) {
+
+  section[data-digitale-sustainability="true"] {
+    text-align: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] h1,
+  section[data-digitale-sustainability="true"] h2,
+  section[data-digitale-sustainability="true"] h3,
+  section[data-digitale-sustainability="true"] p {
+    text-align: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] .grid {
+    justify-items: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] .grid > div {
+    width: 100%;
+    text-align: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] .grid > div > div {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  section[data-digitale-sustainability="true"] .grid p,
+  section[data-digitale-sustainability="true"] .grid span {
+    text-align: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] .flex.flex-wrap {
+    justify-content: center !important;
+  }
+
+  section[data-digitale-sustainability="true"] a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  section[data-digitale-sustainability="true"] .justify-start {
+    justify-content: center !important;
+  }
+}
+
+
+/* DIGITALE_FABRICS_COMMERCIAL_MOBILE_V1 */
+
+@media (max-width: 767px) {
+
+  section[data-digitale-fabrics="true"] {
+    padding-top: 36px;
+  }
+
+  section[data-digitale-fabrics="true"] .section-title {
+    font-size: clamp(25px, 6.5vw, 32px);
+    line-height: 1.18;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    text-align: center;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  section[data-digitale-fabrics="true"] .grid {
+    gap: 12px;
+  }
+
+  section[data-digitale-fabrics="true"] .grid > * {
+    min-width: 0;
+  }
+
+  section[data-digitale-fabrics="true"] h3 {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    font-size: 12px;
+    line-height: 1.45;
+    min-height: 52px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    color: #ed6b16;
+    font-size: 11px;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta svg {
+    flex-shrink: 0;
+  }
+
+  section[data-digitale-fabrics="true"] a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  section[data-digitale-fabrics="true"] a:active {
+    opacity: 0.85;
+  }
+}
+
+
+/* DIGITALE_MOBILE_READABILITY_V1 */
+/* Tipografia e acessibilidade mobile do site público */
+
+@media (max-width: 767px) {
+
+  body:has(header[data-digitale-public-header="true"]) {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Textos auxiliares nunca menores que 14px */
+
+  body:has(header[data-digitale-public-header="true"])
+  main .text-xs,
+
+  body:has(header[data-digitale-public-header="true"])
+  footer .text-xs,
+
+  body:has(header[data-digitale-public-header="true"])
+  header .text-xs {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Textos secundários */
+
+  body:has(header[data-digitale-public-header="true"])
+  main .text-sm,
+
+  body:has(header[data-digitale-public-header="true"])
+  footer .text-sm {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Parágrafos comuns */
+
+  body:has(header[data-digitale-public-header="true"])
+  main p:not([class*="text-"]),
+
+  body:has(header[data-digitale-public-header="true"])
+  footer p:not([class*="text-"]) {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* Títulos mais legíveis */
+
+  body:has(header[data-digitale-public-header="true"])
+  main h1 {
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  main h2 {
+    line-height: 1.22;
+    overflow-wrap: break-word;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  main h3 {
+    line-height: 1.35;
+    overflow-wrap: break-word;
+  }
+
+  /* Botões comerciais */
+
+  body:has(header[data-digitale-public-header="true"])
+  main .btn-primary,
+
+  body:has(header[data-digitale-public-header="true"])
+  main .btn-secondary {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Inputs sem zoom automático no iPhone */
+
+  body:has(header[data-digitale-public-header="true"])
+  input,
+
+  body:has(header[data-digitale-public-header="true"])
+  textarea,
+
+  body:has(header[data-digitale-public-header="true"])
+  select {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  input:not([type="checkbox"]):not([type="radio"]),
+
+  body:has(header[data-digitale-public-header="true"])
+  select {
+    min-height: 44px;
+  }
+
+  /* Vitrine comercial de tecidos */
+
+  section[data-digitale-fabrics="true"]
+  h3 {
+    font-size: 17px !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.01em;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    min-height: 68px;
+    overflow-wrap: break-word;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    min-height: 44px;
+    gap: 6px;
+    overflow-wrap: break-word;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta svg {
+    flex-shrink: 0;
+  }
+
+  /* Rodapé mais confortável */
+
+  body:has(header[data-digitale-public-header="true"])
+  footer {
+    line-height: 1.6;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  footer a {
+    overflow-wrap: anywhere;
+  }
+
+}
+
+/* Tracking Pixel: formulário legível no celular */
+
+@media (max-width: 767px) {
+
+  body:has(header[data-digitale-public-header="true"])
+  [class*="z-[9999]"] form label {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  [class*="z-[9999]"] form input {
+    font-size: 16px !important;
+    min-height: 46px;
+  }
+
+  body:has(header[data-digitale-public-header="true"])
+  [class*="z-[9999]"] form button {
+    font-size: 16px !important;
+    min-height: 46px;
+  }
+
+}
+
+/* Telas muito estreitas: evitar cartões espremidos */
+
+@media (max-width: 359px) {
+
+  section[data-digitale-fabrics="true"]
+  .grid.grid-cols-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    min-height: 0;
+  }
+
+}
+
+
+/* DIGITALE_FABRICS_MOBILE_LIST_V1 */
+/* Vitrine comercial em lista - apenas mobile */
+
+@media (max-width: 767px) {
+
+  /* Um tecido por linha */
+
+  section[data-digitale-fabrics="true"]
+  .grid:has(a[href^="/tecidos/"]) {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 22px !important;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Cartões premium */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]:active {
+    transform: scale(.985);
+  }
+
+  /* Imagem ampla, mantendo a foto original */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(img),
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(video) {
+    aspect-ratio: 16 / 9 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] img,
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Informações comerciais */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card {
+    padding: 18px 20px 16px !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] h3 {
+    font-size: 21px !important;
+    line-height: 1.3 !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+    letter-spacing: -0.025em;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+    max-width: 100%;
+    margin-bottom: 14px;
+    -webkit-line-clamp: unset !important;
+  }
+
+  /* CTA destacado */
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+    min-height: 48px;
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    font-weight: 600 !important;
+    color: #e96c20 !important;
+    border-top: 1px solid rgba(0,0,0,.07);
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta svg {
+    width: 19px !important;
+    height: 19px !important;
+    flex-shrink: 0;
+  }
+
+}
+
+/* Evitar animação para quem prefere movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] {
+    transition: none !important;
+  }
+}
+
+
+/* DIGITALE_FABRICS_IMAGE_FOCUS_V1 */
+
+@media (max-width: 767px) {
+
+  /* Lista vertical */
+
+  section[data-digitale-fabrics="true"]
+  .grid:has(a[href^="/tecidos/"]) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* Cartão sem moldura visual excessiva */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] {
+    display: block !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-shadow: 0 3px 14px rgba(0,0,0,.055) !important;
+  }
+
+  /* Imagens grandes, sem margens internas */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(img),
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(video) {
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] img,
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+  }
+
+  /* Área informativa compacta */
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card {
+    padding: 15px 17px 17px !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] h3 {
+    font-size: 21px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    margin-bottom: 5px !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* Ocultar CTA antigo, inclusive se existir no HTML */
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    display: none !important;
+  }
+
+}
+
+
+
+/* DIGITALE_FABRICS_IMAGE_REFINEMENT_V2 */
+/* Refino da vitrine mobile: remover selo, arredondar imagem e ampliar destaque */
+
+@media (max-width: 767px) {
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] {
+    border-radius: 18px !important;
+    overflow: hidden !important;
+  }
+
+  /* Imagem um pouco maior e com mais presença visual */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(img),
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"]:has(video) {
+    aspect-ratio: 5 / 4 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 18px 18px 0 0 !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] img,
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 18px 18px 0 0 !important;
+    transform: scale(1.02);
+    transform-origin: center center;
+  }
+
+  /* Remove o selo/logo no canto da imagem */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"] > .absolute,
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  [class*="aspect-"] [class*="absolute"] {
+    display: none !important;
+  }
+
+  /* Texto ligeiramente mais próximo da imagem */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card {
+    padding: 14px 16px 16px !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] h3 {
+    margin-bottom: 4px !important;
+  }
+}
+
+
+/* DIGITALE_FABRICS_IMAGE_TITLE_OVERLAY_V1 */
+
+@media (max-width: 767px) {
+
+  /* mantém lista vertical no mobile */
+  section[data-digitale-fabrics="true"]
+  .grid:has(a[href^="/tecidos/"]) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* card com foco total na imagem */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] {
+    display: block !important;
+    width: 100% !important;
+    text-decoration: none !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] > div {
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* imagem maior ocupando o card */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] > div > div.relative.h-48 {
+    height: auto !important;
+    aspect-ratio: 5 / 4 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    border-radius: 20px !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] img,
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* evita excesso visual do fundo branco abaixo */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* garantia extra: descrição e nome antigo escondidos no mobile */
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    display: none !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card h3 {
+    display: none !important;
+  }
+
+  /* remove elementos antigos que não fazem mais sentido no mobile */
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    display: none !important;
+  }
+}
+
+
+/* DIGITALE_FABRICS_IMAGE_TITLE_OVERLAY_V2 */
+
+@media (max-width: 767px) {
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-mobile-title-wrap {
+    display: block !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-mobile-title-gradient {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.42) 38%,
+      rgba(0, 0, 0, 0.00) 100%
+    );
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-mobile-title {
+    font-size: 28px !important;
+    line-height: 1.05 !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.03em;
+    text-align: left !important;
+    margin: 0 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* garante que o título antigo não apareça abaixo da imagem no mobile */
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"] .bg-card h3 {
+    display: none !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-description {
+    display: none !important;
+  }
+
+  section[data-digitale-fabrics="true"]
+  .digitale-fabric-cta {
+    display: none !important;
+  }
+}
+
+/* DIGITALE_FABRIC_TITLE_VISIBILITY_FIX_V1 */
+@media (max-width: 767px) {
+  section[data-digitale-fabrics="true"]
+  a[href^="/tecidos/"]
+  .bg-card .digitale-fabric-mobile-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: 28px !important;
+    line-height: 1.15 !important;
+    font-weight: 500 !important;
+    position: relative;
+    z-index: 30;
+  }
+}
+
+
+/* DIGITALE_NEWSLETTER_MOBILE_READER_V1 */
+
+@media (max-width: 767px) {
+
+  /* Leitura editorial mobile */
+
+  [data-digitale-mobile-reader="true"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    font-size: 18px !important;
+    line-height: 1.7 !important;
+    overflow-wrap: anywhere;
+  }
+
+  [data-digitale-mobile-reader="true"] p,
+  [data-digitale-mobile-reader="true"] li {
+    font-size: 18px !important;
+    line-height: 1.7 !important;
+    margin-bottom: 18px !important;
+  }
+
+  [data-digitale-mobile-reader="true"] h1 {
+    font-size: 29px !important;
+    line-height: 1.2 !important;
+  }
+
+  [data-digitale-mobile-reader="true"] h2 {
+    font-size: 25px !important;
+    line-height: 1.3 !important;
+  }
+
+  [data-digitale-mobile-reader="true"] h3 {
+    font-size: 21px !important;
+    line-height: 1.35 !important;
+  }
+
+  [data-digitale-mobile-reader="true"] img {
+    display: block !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    margin: 18px auto !important;
+  }
+
+  [data-digitale-mobile-reader="true"] iframe,
+  [data-digitale-mobile-reader="true"] video {
+    max-width: 100% !important;
+  }
+
+  [data-digitale-mobile-reader="true"] table {
+    display: block;
+    max-width: 100% !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [data-digitale-mobile-reader="true"] blockquote {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+    padding: 15px 18px !important;
+    border-left: 3px solid #f97316;
+  }
+
+}
+
+
+/* DIGITALE_RADAR_PDF_MOBILE_READER_V1 */
+/* PDF ampliado apenas no celular */
+
+@media (max-width: 767px) {
+
+  .digitale-radar-pdf-scroll {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    background: #f5f5f5;
+  }
+
+  .digitale-radar-pdf-pages {
+    width: 680px !important;
+    min-width: 680px !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .digitale-radar-pdf-pages canvas {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+}
+
+
+
+/* DIGITALE_RADAR_MOBILE_HEADER_V1 */
+
+@media (max-width: 767px) {
+
+  .radar-mobile-edition-header {
+    padding: 18px 15px 22px !important;
+  }
+
+  .radar-mobile-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 10px !important;
+    align-items: center;
+    margin-bottom: 20px !important;
+  }
+
+  .radar-mobile-category {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="date"] {
+    grid-column: 1 / -1;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    min-width: 0;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="views"] {
+    grid-column: 1;
+    font-size: 13px !important;
+    min-width: 0;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="likes"] {
+    grid-column: 2;
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    padding: 0 8px !important;
+    justify-content: center;
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="reactions"] {
+    grid-column: 1;
+    width: 100%;
+    height: 40px;
+    justify-content: space-evenly;
+    min-width: 0;
+    margin: 0 !important;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="reactions"] button {
+    min-width: 0;
+    padding: 0 5px !important;
+    font-size: 12px !important;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="share"] {
+    grid-column: 2;
+    width: 100%;
+    min-height: 40px;
+    min-width: 0;
+    justify-content: center;
+    padding: 0 8px !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  .radar-mobile-edition-header > h2 {
+    font-size: 24px !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.025em !important;
+    font-weight: 500 !important;
+    overflow-wrap: break-word;
+    margin: 0 !important;
+  }
+
+  .radar-mobile-edition-header > p {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    margin-top: 12px !important;
+    letter-spacing: 0 !important;
+  }
+
+}
+
+
+
+/* DIGITALE_RADAR_HEADER_REFINEMENT_V2 */
+
+@media (max-width: 767px) {
+
+  .radar-mobile-edition-header {
+    padding: 20px 17px 25px !important;
+  }
+
+  .radar-mobile-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 9px 10px !important;
+    align-items: center !important;
+    margin-bottom: 25px !important;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="date"] {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    white-space: normal;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="views"] {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="likes"] {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: auto !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="reactions"] {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    height: 36px !important;
+    padding: 0 4px !important;
+    justify-content: flex-start !important;
+  }
+
+  .radar-mobile-actions
+  [data-radar-mobile-slot="share"] {
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    width: auto !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+  }
+
+  .radar-mobile-edition-header > h2 {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    text-wrap: pretty;
+    overflow-wrap: normal;
+  }
+
+  .radar-mobile-edition-header > p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0 !important;
+    margin-top: 13px !important;
+    max-width: 100%;
+  }
+
+}
+
+
+
+/* DIGITALE_RADAR_BOTTOM_MOBILE_V3 */
+
+@media (max-width: 767px) {
+
+  .radar-mobile-edition-header {
+    padding: 25px 18px 23px !important;
+    text-align: center !important;
+  }
+
+  .radar-mobile-actions {
+    display: none !important;
+  }
+
+  .radar-mobile-edition-header > h2 {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.015em !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    text-wrap: balance;
+    margin: 0 auto !important;
+    max-width: 100%;
+  }
+
+  .radar-mobile-edition-header > p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+    margin: 14px auto 0 !important;
+    max-width: 100%;
+  }
+
+  .radar-bottom-mobile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+    padding: 22px 16px;
+    border-top: 1px solid #e5e7eb;
+    background: white;
+  }
+
+  .radar-bottom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .radar-bottom-button:active {
+    background: #f3f4f6;
+  }
+
+  .radar-bottom-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+}
+
+
+/* DIGITALE_RADAR_MOBILE_SWIPE_HINT_V1 */
+
+.digitale-radar-pdf-mobile-shell {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+
+  .digitale-radar-mobile-hint {
+    display: flex;
+    justify-content: center;
+    padding: 10px 12px 14px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(248,250,252,0.95));
+  }
+
+  .digitale-radar-mobile-hint-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 100%;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(29, 78, 216, 0.08);
+    border: 1px solid rgba(29, 78, 216, 0.14);
+    color: #1e3a8a;
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    animation: digitaleHintFloat 2.2s ease-in-out infinite;
+  }
+
+  .digitale-radar-mobile-hint-arrow {
+    font-size: 15px;
+    font-weight: 700;
+    opacity: 0.95;
+    animation: digitaleHintArrow 1.6s ease-in-out infinite;
+  }
+
+  .digitale-radar-mobile-hint-arrow:last-child {
+    animation-delay: 0.2s;
+  }
+
+  @keyframes digitaleHintFloat {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes digitaleHintArrow {
+    0%   { transform: translateX(0); opacity: 0.65; }
+    50%  { transform: translateX(2px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 0.65; }
+  }
+
+}
+
+
+
+/* DIGITALE_RADAR_IMMERSIVE_HINT_V2 */
+
+@media (max-width: 767px) {
+
+  .digitale-radar-pdf-mobile-shell {
+    position: relative !important;
+    isolation: isolate;
+  }
+
+  .digitale-radar-mobile-hint {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 225px !important;
+    padding: 20px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: rgba(255, 255, 255, 0.44) !important;
+
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+
+    z-index: 10;
+    pointer-events: none !important;
+    animation: none !important;
+  }
+
+  .digitale-radar-mobile-hint-pill {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: min(100%, 290px);
+    max-width: 290px;
+
+    gap: 7px !important;
+    padding: 20px 15px !important;
+
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    border-radius: 18px !important;
+
+    background: rgba(255, 255, 255, 0.94) !important;
+    color: #26364e !important;
+
+    box-shadow:
+      0 12px 35px rgba(15, 23, 42, 0.12) !important;
+
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+
+    animation: none !important;
+    transform: none !important;
+    text-align: center !important;
+  }
+
+  .digitale-radar-mobile-hint-pill strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d3557;
+  }
+
+  .digitale-radar-mobile-hint-pill small {
+    font-size: 11px;
+    font-weight: 400;
+    color: #64748b;
+  }
+
+  .digitale-radar-gesture-icon {
+    display: block;
+    font-size: 30px;
+    line-height: 1;
+    color: #315b9a;
+
+    animation: digitaleGestureMove 1.7s
+      ease-in-out infinite;
+  }
+
+  @keyframes digitaleGestureMove {
+    0%, 100% {
+      transform: translateX(-7px);
+    }
+    50% {
+      transform: translateX(7px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .digitale-radar-gesture-icon {
+      animation: none !important;
+    }
+  }
+
+}

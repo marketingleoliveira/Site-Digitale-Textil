@@ -268,7 +268,10 @@ export default function FabricDetail() {
 
 
                 {/* FABRIC_TECHNICAL_CONTENT_V1 */}
-                <section aria-labelledby="fabric-technical-title" className="space-y-5">
+                <section
+                  aria-labelledby="fabric-technical-title"
+                  className="hidden md:block space-y-5"
+                >
                   <h2 id="fabric-technical-title" className="text-2xl font-bold">
                     Características e ficha técnica do tecido {fabric.name}
                   </h2>
@@ -320,22 +323,49 @@ export default function FabricDetail() {
                   )}
                 </section>
 
-                {/* Lead Form - replaces specs/features/applications */}
-                <FabricLeadForm
+                {/* DIGITALE_MOBILE_TECHNICAL_HIDDEN_V1 */}
+                {/* Formulário técnico permanece somente no desktop */}
+                <div className="hidden md:block">
+                  <FabricLeadForm
                   fabricId={fabric.id}
                   fabricName={fabric.name}
                   fabricSlug={fabric.slug}
-                />
+                  />
+                </div>
 
                 {/* CTA */}
                 <div className="pt-4 space-y-4">
+                  
+                  {/* DIGITALE_FABRIC_WHATSAPP_MOBILE_V1 */}
+                  {/* DIGITALE_FABRIC_REMOVE_EXTRA_CONTACT_MOBILE_V1 */}
+
+                  <a
+                    href="https://wa.me/5511973715327?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20os%20tecidos%20da%20Digitale."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chamar a Digitale no WhatsApp"
+                    className="md:hidden w-full min-h-[54px] rounded-xl bg-[#25D366] text-white flex items-center justify-center gap-3 px-5 py-3 text-[16px] font-semibold shadow-md hover:bg-[#1ebe5d] active:scale-[0.98] transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6 shrink-0"
+                      aria-hidden="true"
+                    >
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.198.297-.768.965-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372-.273.297-1.04 1.015-1.04 2.478s1.064 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.261.489 1.692.626.711.226 1.359.194 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347M12.004 2a9.935 9.935 0 0 0-8.573 14.97L2 22l5.172-1.355A9.95 9.95 0 0 0 12.004 22C17.526 22 22 17.523 22 12S17.526 2 12.004 2m0 18.18a8.172 8.172 0 0 1-4.162-1.14l-.299-.178-3.086.81.824-3.008-.195-.309A8.172 8.172 0 0 1 3.82 12c0-4.514 3.671-8.185 8.184-8.185 4.514 0 8.185 3.671 8.185 8.185 0 4.514-3.671 8.185-8.185 8.185"/>
+                    </svg>
+
+                    <span>Chamar no WhatsApp</span>
+                  </a>
+
                   <Link
                     to="/contato"
-                    className="btn-primary w-full text-center block"
+                    className="hidden md:block btn-primary w-full text-center"
                   >
                     {t("cta.button")}
                   </Link>
-                  <div className="flex flex-col sm:flex-row gap-4 text-sm text-muted-foreground">
+                  <div className="hidden md:flex flex-col md:flex-row gap-4 text-sm text-muted-foreground">
                     <a href={`tel:+${whatsappNumber}`} className="flex items-center gap-2 hover:text-accent">
                       <Phone className="h-4 w-4" />
                       {formatPhone(whatsappNumber)}

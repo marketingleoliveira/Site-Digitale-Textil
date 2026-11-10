@@ -256,9 +256,6 @@ function FabricsContent() {
                             })()}
 
                             <div className="flex items-center gap-3 flex-shrink-0">
-                              <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-                                {categoryFabrics.length} tecido{categoryFabrics.length !== 1 ? 's' : ''}
-                              </span>
                               <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                             </div>
                           </button>

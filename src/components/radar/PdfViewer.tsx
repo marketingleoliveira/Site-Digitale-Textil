@@ -13,9 +13,11 @@ interface PdfViewerProps {
 export function PdfViewer({ url, title }: PdfViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    setShowSwipeHint(true);
     let cancelled = false;
 
     const renderPdf = async () => {
@@ -93,7 +95,46 @@ export function PdfViewer({ url, title }: PdfViewerProps) {
           <Skeleton className="h-[600px] w-full" />
         </div>
       )}
-      <div ref={containerRef} className="w-full" />
+      
+      {/* DIGITALE_RADAR_PDF_MOBILE_READER_V1 */}
+
+      
+      {/* DIGITALE_RADAR_MOBILE_SWIPE_HINT_V1 */}
+      <div className="digitale-radar-pdf-mobile-shell">
+        <div
+          className="digitale-radar-pdf-scroll"
+          onTouchStart={() => setShowSwipeHint(false)}
+          onPointerDown={() => setShowSwipeHint(false)}
+          onScroll={() => setShowSwipeHint(false)}
+        >
+          <div
+            ref={containerRef}
+            className="w-full digitale-radar-pdf-pages"
+          />
+        </div>
+
+        {/* DIGITALE_RADAR_IMMERSIVE_HINT_V2 */}
+        {showSwipeHint && !loading && (
+          <div
+            className="md:hidden digitale-radar-mobile-hint"
+            role="status"
+          >
+            <div className="digitale-radar-mobile-hint-pill">
+              <span className="digitale-radar-gesture-icon">
+                ↔
+              </span>
+              <strong>Explore a newsletter</strong>
+              <span>
+                Deslize para os lados para ler
+              </span>
+              <small>
+                Toque no documento para começar
+              </small>
+            </div>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 }

@@ -412,14 +412,14 @@ const RadarDigitale = () => {
                     className="bg-card rounded-2xl border border-border overflow-hidden"
                   >
                     {/* Edition Header */}
-                    <div className="p-6 md:p-8 border-b border-border">
-                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <div className="radar-mobile-edition-header p-6 md:p-8 border-b border-border">
+                      <div className="radar-mobile-actions flex flex-wrap items-center gap-3 mb-3">
                         {activeEdition.radar_categories && (
-                          <Badge className="bg-accent text-accent-foreground">
+                          <Badge className="radar-mobile-category bg-accent text-accent-foreground">
                             {activeEdition.radar_categories.name}
                           </Badge>
                         )}
-                        <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
+                        <div data-radar-mobile-slot="date" className="flex items-center gap-1.5 text-muted-foreground text-sm">
                           <Calendar className="h-4 w-4" />
                           <span>
                             Edição {new Date(activeEdition.edition_date).toLocaleDateString("pt-BR", {
@@ -429,11 +429,11 @@ const RadarDigitale = () => {
                             })}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
+                        <div data-radar-mobile-slot="views" className="flex items-center gap-1.5 text-muted-foreground text-sm">
                           <Eye className="h-4 w-4" />
                           <span>{formatViews(getViewCount(activeEdition))} leituras</span>
                         </div>
-                        <Button
+                        <Button data-radar-mobile-slot="likes"
                           variant="outline"
                           size="sm"
                           onClick={() => likeMutation.mutate(activeEdition.id)}
@@ -448,7 +448,7 @@ const RadarDigitale = () => {
                           <Heart className={cn("h-4 w-4", likedEditions.has(activeEdition.id) && "fill-red-500")} />
                           Curtir · {formatViews(activeEdition.likes ?? 0)}
                         </Button>
-                        <div className="flex items-center gap-1 rounded-md border border-border bg-background p-0.5">
+                        <div data-radar-mobile-slot="reactions" className="flex items-center gap-1 rounded-md border border-border bg-background p-0.5">
                           <Button
                             variant="ghost"
                             size="sm"
@@ -489,7 +489,7 @@ const RadarDigitale = () => {
                         </div>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button
+                            <Button data-radar-mobile-slot="share"
                               variant="outline"
                               size="sm"
                               className="gap-2 hover:border-accent hover:bg-accent/10 hover:text-accent transition-all"
@@ -545,7 +545,77 @@ const RadarDigitale = () => {
                         />
                       )}
                     </div>
-                  </motion.div>
+                  
+                    {/* DIGITALE_RADAR_BOTTOM_MOBILE_V3 */}
+                    <div className="radar-bottom-mobile md:hidden">
+                      <button
+                        type="button"
+                        onClick={() => likeMutation.mutate(activeEdition.id)}
+                        disabled={likeMutation.isPending}
+                        className="radar-bottom-button"
+                      >
+                        <Heart className="h-4 w-4" />
+                        Curtir
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => reactionMutation.mutate({
+                          editionId: activeEdition.id,
+                          reaction: "happy"
+                        })}
+                        disabled={reactionMutation.isPending}
+                        className="radar-bottom-button"
+                      >
+                        <Smile className="h-4 w-4" />
+                        Gostei
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => reactionMutation.mutate({
+                          editionId: activeEdition.id,
+                          reaction: "sad"
+                        })}
+                        disabled={reactionMutation.isPending}
+                        className="radar-bottom-button"
+                      >
+                        <Frown className="h-4 w-4" />
+                        Não gostei
+                      </button>
+
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button type="button" className="radar-bottom-button">
+                            <Share2 className="h-4 w-4" />
+                            Compartilhar
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => shareEdition("copy")}>
+                            <Link2 className="h-4 w-4 mr-2" />
+                            Copiar link
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareEdition("whatsapp")}>
+                            <MessageCircle className="h-4 w-4 mr-2" />
+                            WhatsApp
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareEdition("linkedin")}>
+                            <Share2 className="h-4 w-4 mr-2" />
+                            LinkedIn
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareEdition("facebook")}>
+                            <Share2 className="h-4 w-4 mr-2" />
+                            Facebook
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => shareEdition("email")}>
+                            <Send className="h-4 w-4 mr-2" />
+                            E-mail
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+</motion.div>
                 )}
               </div>
 
@@ -575,8 +645,9 @@ const RadarDigitale = () => {
                     </Tooltip>
                   </TooltipProvider>
 
+                  {/* DIGITALE_RADAR_FILTERS_DESKTOP_ONLY_V2 */}
                   {/* Category Filter */}
-                  <div className="bg-card rounded-2xl border border-border p-5">
+                  <div className="hidden md:block bg-card rounded-2xl border border-border p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <Filter className="h-4 w-4 text-accent" />
                       <h3 className="font-semibold text-foreground text-sm uppercase tracking-wider">Categorias</h3>
@@ -609,7 +680,7 @@ const RadarDigitale = () => {
                   </div>
 
                   {/* Date Filter */}
-                  <div className="bg-card rounded-2xl border border-border p-5">
+                  <div className="hidden md:block bg-card rounded-2xl border border-border p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <Calendar className="h-4 w-4 text-accent" />
                       <h3 className="font-semibold text-foreground text-sm uppercase tracking-wider">Filtrar por data</h3>

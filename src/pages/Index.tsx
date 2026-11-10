@@ -32,8 +32,21 @@ const Index = () => {
       />
       <main>
         <Hero />
-        <Products />
         <Testimonials />
+        <Products />
+
+        {/* DIGITALE_CTA_TECIDOS_ANTES_DEPOIMENTOS */}
+        <div className="flex justify-center bg-secondary/30 px-4 pb-12 pt-2">
+          <a
+            href="https://digitaletextil.com.br/tecidos"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#FF7900] px-8 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#E66D00] hover:shadow-lg active:scale-95"
+          >
+            Ver mais tecidos
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        
         <Suspense fallback={null}>
           <LazySustainability />
         </Suspense>

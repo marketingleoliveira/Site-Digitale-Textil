@@ -53,6 +53,7 @@ const fallbackFabrics = [
 { name: "Veneza", slug: "veneza", image_url: fabricVeneza, short_description: "Acabamento acetinado premium com brilho sofisticado." }];
 
 
+
 export function Products() {
   const { t } = useLanguage();
 
@@ -107,11 +108,12 @@ export function Products() {
   const displayFabrics = fabrics && fabrics.length > 0 ? fabrics : fallbackFabrics;
 
   return (
-    <section className="py-16 md:py-24 bg-secondary/30">
+    <section data-digitale-fabrics="true" className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4 md:px-6">
         {/* Fabrics Section */}
         <div className="text-center mb-10 md:mb-12">
-          <h2 className="section-title">Tecidos Confort</h2>
+          <h2 className="section-title"><span className="md:hidden">Tecidos que valorizam sua coleção.</span><span className="hidden md:inline">Tecidos Confort</span></h2>
+
         </div>
 
         {/* Fabrics Grid */}
@@ -154,12 +156,21 @@ export function Products() {
                       <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       
                       {/* Logo Badge */}
-                      <div className="absolute top-2 right-2 md:top-3 md:right-3 w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg flex items-center justify-center shadow-lg p-1.5 transition-transform duration-300 group-hover:scale-110">
+                      <div className="hidden md:flex absolute top-2 right-2 md:top-3 md:right-3 w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg items-center justify-center shadow-lg p-1.5 transition-transform duration-300 group-hover:scale-110">
                         <img
                       src={logoColor}
                       alt="Digitale"
                       className="w-full h-full object-contain" />
 
+                      </div>
+                      {/* DIGITALE_FABRICS_IMAGE_TITLE_OVERLAY_V2 */}
+                      <div className="md:hidden digitale-fabric-mobile-title-wrap absolute inset-x-0 bottom-0 z-20">
+                        <div className="digitale-fabric-mobile-title-gradient absolute inset-x-0 bottom-0 h-24 pointer-events-none" />
+                        <div className="relative px-4 pb-4 pt-10">
+                          <h3 className="digitale-fabric-mobile-title text-white">
+                            {fabric.name}
+                          </h3>
+                        </div>
                       </div>
 
                       {/* Hover Content */}
@@ -172,12 +183,34 @@ export function Products() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-3 md:p-5 bg-card">
+                    <div className="hidden md:block md:p-5 bg-card">
                       <h3 className="text-sm md:text-lg font-bold text-foreground mb-1 group-hover:text-accent transition-colors duration-300">
                         {fabric.name}
                       </h3>
-                      <p className="text-muted-foreground text-xs md:text-sm line-clamp-2">
+                      {/* DIGITALE_FABRICS_COMMERCIAL_MOBILE_V1 */}
+
+                      <p className="hidden md:block text-muted-foreground text-xs md:text-sm line-clamp-2">
                         {fabric.short_description}
+                      </p>
+
+                      <p className="md:hidden digitale-fabric-description text-muted-foreground text-xs">
+                        {(() => {
+                          const name = (fabric.name || "").toLowerCase();
+
+                          if (name.includes("milano"))
+                            return "Mais estrutura para sua linha fitness.";
+
+                          if (name.includes("lyon"))
+                            return "Textura que valoriza cada peça.";
+
+                          if (name.includes("aerodry"))
+                            return "Leveza e desempenho para suas criações.";
+
+                          if (name.includes("veneza"))
+                            return "Um acabamento que faz a diferença.";
+
+                          return fabric.short_description;
+                        })()}
                       </p>
                       
                       {/* Arrow indicator */}
@@ -193,55 +226,7 @@ export function Products() {
           </div>
         }
 
-        {/* Prints Section */}
-        <div className="text-center mb-10 md:mb-12 mt-16 md:mt-20">
-          <h2 className="section-title">Novas Estampas</h2>
-        </div>
-
-        {/* Prints Grid */}
-        {printsLoading ?
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5 mb-8">
-            {[...Array(6)].map((_, i) =>
-          <Skeleton key={i} className="aspect-square rounded-xl" />
-          )}
-          </div> :
-        prints && prints.length > 0 ?
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5 mb-8">
-            {prints.map((print) =>
-          <div
-            key={print.id}
-            className="group relative aspect-square rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-
-                {isVideoUrl(print.image_url) ?
-            <video
-              src={print.image_url}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              muted loop autoPlay playsInline /> :
-
-
-            <img
-              src={print.image_url}
-              alt={print.name || print.code}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
-            }
-
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end p-3">
-                  <span className="text-white font-bold text-sm md:text-base">{print.code}</span>
-                  {print.name &&
-              <span className="text-white/80 text-xs">{print.name}</span>
-              }
-                </div>
-              </div>
-          )}
-          </div> :
-
-        <div className="text-center text-muted-foreground py-12">
-            <p>Nenhuma estampa cadastrada ainda.</p>
-          </div>
-        }
+        {/* Seção Novas Estampas removida da homepage */}
       </div>
     </section>);
 

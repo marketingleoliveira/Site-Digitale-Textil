@@ -41,7 +41,7 @@ export function Sustainability() {
   ];
 
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden">
+    <section data-digitale-sustainability="true" className="py-20 md:py-28 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-green-50/50 to-teal-50/30 dark:from-emerald-950/30 dark:via-green-950/20 dark:to-teal-950/10" />
       

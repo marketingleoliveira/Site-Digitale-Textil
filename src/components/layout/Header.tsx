@@ -77,14 +77,14 @@ export function Header() {
       </div>
 
       {/* Main Header */}
-      <header
+      <header data-digitale-public-header="true"
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-white shadow-lg py-2"
             : "bg-white/95 backdrop-blur-md py-3 md:py-4"
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6">
           <div className="flex items-center justify-between">
             {/* Logo + Depoimentos Button */}
             <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
@@ -187,10 +187,9 @@ export function Header() {
             </div>
 
             {/* Mobile: Language + Menu Button */}
-            <div className="lg:hidden flex items-center gap-2">
-              <div className="md:hidden">
-                <LanguageSwitcher />
-              </div>
+            <div className="lg:hidden flex items-center gap-1">
+              {/* Idiomas ocultos apenas no mobile.
+                  O seletor do desktop permanece disponível. */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="p-2 text-foreground hover:text-accent transition-colors"

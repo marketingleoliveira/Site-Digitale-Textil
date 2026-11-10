@@ -1,3 +1,4 @@
+// DIGITALE_TESTIMONIAL_PERFORMANCE_V1
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, Star, VolumeX } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,6 +22,9 @@ export function Testimonials() {
   const [isMuted, setIsMuted] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // DIGITALE_TESTIMONIAL_SWIPE_V1
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const { t } = useLanguage();
 
   const { data: testimonials = [] } = useQuery({
@@ -55,6 +59,48 @@ export function Testimonials() {
     return () => clearInterval(timer);
   }, [isAutoPlaying, next, testimonials.length]);
 
+  // Navegação por toque em telas mobile.
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (event.touches.length !== 1) {
+      touchStart.current = null;
+      return;
+    }
+
+    touchStart.current = {
+      x: event.touches[0].clientX,
+      y: event.touches[0].clientY
+    };
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+
+    if (!start || event.changedTouches.length !== 1) return;
+    if (testimonials.length < 2) return;
+
+    const deltaX = event.changedTouches[0].clientX - start.x;
+    const deltaY = event.changedTouches[0].clientY - start.y;
+
+    // Distância mínima de 45px para evitar trocas acidentais.
+    if (Math.abs(deltaX) < 45) return;
+
+    // Gestos verticais continuam rolando a página normalmente.
+    if (Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+
+    setIsAutoPlaying(false);
+
+    if (deltaX < 0) {
+      next();
+    } else {
+      prev();
+    }
+  };
+
+  const handleTouchCancel = () => {
+    touchStart.current = null;
+  };
+
   // Reset current index when testimonials change
   useEffect(() => {
     if (testimonials.length > 0 && current >= testimonials.length) {
@@ -69,6 +115,7 @@ export function Testimonials() {
     node.muted = true;
     node.playsInline = true;
     const forcePlay = () => {
+      if (!node.isConnected) return;
       const p = node.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
@@ -76,11 +123,7 @@ export function Testimonials() {
     node.addEventListener("loadedmetadata", forcePlay, { once: true });
     node.addEventListener("loadeddata", forcePlay, { once: true });
     node.addEventListener("canplay", forcePlay, { once: true });
-    // Retry a few times in case of slow network
-    const retries = [200, 600, 1500, 3000];
-    retries.forEach((ms) => setTimeout(() => {
-      if (node.paused) forcePlay();
-    }, ms));
+
   }, []);
 
   // Try to play whenever the user interacts anywhere on the page (autoplay unlock)
@@ -90,11 +133,11 @@ export function Testimonials() {
       if (v && v.paused) v.play().catch(() => {});
     };
     window.addEventListener("click", unlock, { passive: true });
-    window.addEventListener("scroll", unlock, { passive: true });
+
     window.addEventListener("touchstart", unlock, { passive: true });
     return () => {
       window.removeEventListener("click", unlock);
-      window.removeEventListener("scroll", unlock);
+
       window.removeEventListener("touchstart", unlock);
     };
   }, []);
@@ -133,14 +176,16 @@ export function Testimonials() {
           <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground leading-tight mt-4">
             {t("testimonials.title")}
           </h2>
-          <p className="text-primary-foreground/60 mt-4 max-w-2xl mx-auto">
-            Milhares de empresas confiam na Digitale para criar produtos de qualidade superior
-          </p>
+          
         </div>
 
         {/* Featured Testimonial with Video */}
         <div
           className="relative max-w-6xl mx-auto"
+          style={{ touchAction: "pan-y" }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchCancel}
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
@@ -162,7 +207,7 @@ export function Testimonials() {
                         muted={isMuted}
                         playsInline
                         loop
-                        preload="auto"
+                        preload="metadata"
                         poster={t.author_photo_url || undefined}
                         className="w-full h-full object-cover"
                       />
