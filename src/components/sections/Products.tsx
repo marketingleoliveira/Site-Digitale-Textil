@@ -41,6 +41,8 @@ const defaultImages: Record<string, string> = {
 
 // Helper function to get fabric image
 const getFabricImage = (fabric: {slug?: string;image_url?: string | null;}) => {
+  // DIGITALE_HOME_MILANO_MODELO_V1
+  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-32e356eb6e0d6cb1ef708c13686c2ea90f2ece65ea01765cd693824c152fabf0.jpg";
   if (fabric.image_url) return fabric.image_url;
   if (fabric.slug && defaultImages[fabric.slug]) return defaultImages[fabric.slug];
   return fabricMilano;
@@ -148,6 +150,11 @@ export function Products() {
                   <img
                     src={getFabricImage(fabric)}
                     alt={fabric.name}
+                    style={fabric.slug?.toLowerCase() === "milano" ? {
+                      objectPosition: "45% 42%",
+                      transform: "scale(2)",
+                      transformOrigin: "45% 42%"
+                    } : undefined}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   }

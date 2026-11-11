@@ -25,6 +25,12 @@ export function MobilePanoramicHero({ slides }: Props) {
   const [fadeVisible, setFadeVisible] = useState(false);
   const [active, setActive] = useState(0);
   const initialized = useRef(false);
+  // DIGITALE_BANNER_MOUSE_DRAG_V1
+  const mouseDragRef = useRef<{
+    pointerId: number;
+    lastX: number;
+  } | null>(null);
+
 
   const count = slides.length;
   const groupWidth = count * slideWidth;
@@ -260,10 +266,55 @@ export function MobilePanoramicHero({ slides }: Props) {
       <div
         ref={viewportRef}
         onScroll={handleScroll}
+        onPointerDown={(event) => {
+          // O toque mantém a rolagem nativa do mobile.
+          if (event.pointerType !== "mouse" || event.button !== 0) return;
+
+          mouseDragRef.current = {
+            pointerId: event.pointerId,
+            lastX: event.clientX
+          };
+
+          event.currentTarget.setPointerCapture(event.pointerId);
+          event.currentTarget.style.cursor = "grabbing";
+        }}
+        onPointerMove={(event) => {
+          const drag = mouseDragRef.current;
+          if (!drag || drag.pointerId !== event.pointerId) return;
+
+          event.preventDefault();
+          const delta = event.clientX - drag.lastX;
+          drag.lastX = event.clientX;
+
+          // Movimento incremental preserva a normalização circular.
+          event.currentTarget.scrollLeft -= delta;
+        }}
+        onPointerUp={(event) => {
+          if (mouseDragRef.current?.pointerId !== event.pointerId) return;
+
+          mouseDragRef.current = null;
+          event.currentTarget.style.cursor = "grab";
+
+          if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+          }
+        }}
+        onPointerCancel={(event) => {
+          if (mouseDragRef.current?.pointerId !== event.pointerId) return;
+          mouseDragRef.current = null;
+          event.currentTarget.style.cursor = "grab";
+        }}
+        onLostPointerCapture={(event) => {
+          mouseDragRef.current = null;
+          event.currentTarget.style.cursor = "grab";
+        }}
+
         className="w-full overflow-x-auto overflow-y-hidden"
         style={{
           height: "clamp(220px, 58vw, 340px)",
           touchAction: "pan-x pan-y",
+          cursor: "grab",
+          userSelect: "none",
           overscrollBehaviorX: "contain",
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch"
