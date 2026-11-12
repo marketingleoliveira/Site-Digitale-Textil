@@ -109,7 +109,7 @@ export function Header() {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center">
+            <nav className="hidden xl:flex items-center">
               {navigation.map((item) => (
                 item.children ? (
                   <div
@@ -168,7 +168,7 @@ export function Header() {
             </nav>
 
             {/* CTA + SAC */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden xl:flex items-center gap-3">
               <a
                 href="https://sac.digitaletextil.com.br"
                 target="_blank"
@@ -187,7 +187,7 @@ export function Header() {
             </div>
 
             {/* Mobile: Language + Menu Button */}
-            <div className="lg:hidden flex items-center gap-1">
+            <div className="xl:hidden flex items-center gap-1">
               {/* Idiomas ocultos apenas no mobile.
                   O seletor do desktop permanece disponível. */}
               <button
@@ -205,7 +205,7 @@ export function Header() {
 
           {isMobileMenuOpen && (
             <div
-              className="lg:hidden bg-white border-t border-border overflow-hidden"
+              className="xl:hidden bg-white border-t border-border overflow-hidden"
             >
               <nav className="container mx-auto px-4 py-4">
                 {/* WhatsApp Link for Mobile */}

@@ -1764,3 +1764,62 @@ a[href="/blog/"] {
   }
 
 }
+
+/* DIGITALE_FABRICS_ALIGNMENT_V1 */
+@media (min-width: 768px) {
+[data-digitale-fabrics="true"] > .digitale-fabrics-container { box-sizing: border-box; width: 100%; max-width: 1400px; margin-inline: auto; }
+[data-digitale-fabrics="true"] .grid > .group { min-width: 0; }
+[data-digitale-fabrics="true"] .grid > .group > a { height: 100%; }
+[data-digitale-fabrics="true"] .grid > .group > a > .bg-card { height: 100%; display: flex; flex-direction: column; }
+[data-digitale-fabrics="true"] .grid > .group > a > .bg-card > .relative { flex-shrink: 0; }
+[data-digitale-fabrics="true"] .grid > .group > a > .bg-card > .bg-card { display: flex; flex-direction: column; flex: 1; }
+[data-digitale-fabrics="true"] .bg-card > .bg-card > .items-center { margin-top: auto; padding-top: 12px; }
+}
+
+
+
+
+/* DIGITALE_TECHNOLOGY_FLOATING_SHADOW_V1 */
+[data-digitale-home-technologies] .digitale-technology-floating::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: calc(100% + 15px);
+  left: 14%;
+  width: 72%;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(24, 40, 65, .20);
+  filter: blur(7px);
+}
+[data-digitale-home-technologies] #home-technologies-title {
+  font-weight: 400;
+}
+@media (max-width: 767px) {
+  [data-digitale-home-technologies] #home-technologies-title {
+    font-size: clamp(25px, 6.5vw, 32px);
+    line-height: 1.18;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    text-align: center;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* DIGITALE_HOME_TITLES_THIN_V1 */
+[data-digitale-fabrics="true"] .section-title,
+[data-digitale-home-technologies] #home-technologies-title {
+  font-family: 'Helvetica Neue Custom', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 100 !important;
+  font-synthesis: none;
+}
+@media (max-width: 767px) {
+  [data-digitale-home-technologies] .digitale-technologies-viewport {
+    width: calc(100% + 2rem);
+    max-width: none;
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+}

@@ -5,6 +5,7 @@ import { SEO } from "@/components/SEO";
 import { JsonLd, ORGANIZATION_JSONLD } from "@/components/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { Products } from "@/components/sections/Products";
+import { HomeTechnologies } from "@/components/sections/HomeTechnologies";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Clients } from "@/components/sections/Clients";
 
@@ -33,6 +34,7 @@ const Index = () => {
       <main>
         <Hero />
         <Testimonials />
+        <HomeTechnologies />
         <Products />
 
         {/* DIGITALE_CTA_TECIDOS_ANTES_DEPOIMENTOS */}

@@ -67,7 +67,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-2 lg:col-span-1">
-            <img src={logoWhite} alt="Digitale Têxtil" className="h-10 md:h-14 mb-4 md:mb-6" />
+            <img src={logoWhite} alt="Digitale Têxtil" className="w-[210px] h-[145px] md:w-[240px] md:h-[170px] max-w-full object-contain object-left mb-4 md:mb-6" />
             <p className="text-white/70 text-sm leading-relaxed mb-4 md:mb-6">
               {t("footer.description")}
             </p>

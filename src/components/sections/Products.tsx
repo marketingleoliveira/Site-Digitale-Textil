@@ -42,7 +42,13 @@ const defaultImages: Record<string, string> = {
 // Helper function to get fabric image
 const getFabricImage = (fabric: {slug?: string;image_url?: string | null;}) => {
   // DIGITALE_HOME_MILANO_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-32e356eb6e0d6cb1ef708c13686c2ea90f2ece65ea01765cd693824c152fabf0.jpg";
+  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-06ec8b41ccdb3ebc6e00ce31a65699ef385605d619d45158fb0d0663cccae90c.png";
+  // DIGITALE_HOME_LYON_MODELO_V1
+  if (fabric.slug?.toLowerCase() === "lyon") return "/images/home/lyon-modelo-7beabc2c7ecf819d0c39d14424d71fc5e447a2ada37f1b5c0f788984cb910e71.png";
+  // DIGITALE_HOME_AERODRY_MODELO_V1
+  if (fabric.slug?.toLowerCase() === "aerodry") return "/images/home/aerodry-modelo-f40157beee6afafddb755528c597adec6a206b8bcff9e5325ba1e7ea0c2e273f.png";
+  // DIGITALE_HOME_VENEZA_MODELO_V1
+  if (fabric.slug?.toLowerCase() === "veneza") return "/images/home/veneza-modelo-509ee8d8a8219f722d0bf1d078aba450e9659c4005c7eb0519c3697e6ea8b796.png";
   if (fabric.image_url) return fabric.image_url;
   if (fabric.slug && defaultImages[fabric.slug]) return defaultImages[fabric.slug];
   return fabricMilano;
@@ -107,11 +113,18 @@ export function Products() {
     staleTime: 1000 * 60 * 2
   });
 
-  const displayFabrics = fabrics && fabrics.length > 0 ? fabrics : fallbackFabrics;
+  const homeFabricOrder = ["milano", "lyon", "veneza", "aerodry"];
+  const displayFabrics = [...(fabrics && fabrics.length > 0 ? fabrics : fallbackFabrics)].sort((a, b) => {
+    const rank = (slug?: string) => {
+      const index = homeFabricOrder.indexOf(slug?.toLowerCase() || "");
+      return index < 0 ? homeFabricOrder.length : index;
+    };
+    return rank(a.slug) - rank(b.slug);
+  });
 
   return (
     <section data-digitale-fabrics="true" className="py-16 md:py-24 bg-secondary/30">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="digitale-fabrics-container w-full min-w-0 max-w-[1400px] mx-auto px-4 md:px-6">
         {/* Fabrics Section */}
         <div className="text-center mb-10 md:mb-12">
           <h2 className="section-title"><span className="md:hidden">Tecidos que valorizam sua coleção.</span><span className="hidden md:inline">Tecidos Confort</span></h2>
@@ -150,11 +163,16 @@ export function Products() {
                   <img
                     src={getFabricImage(fabric)}
                     alt={fabric.name}
-                    style={fabric.slug?.toLowerCase() === "milano" ? {
-                      objectPosition: "45% 42%",
-                      transform: "scale(2)",
-                      transformOrigin: "45% 42%"
-                    } : undefined}
+                    style={{
+                      // Enquadramento individual: mesma prioridade para a roupa,
+                      // sem filtros ou alteração do arquivo original.
+                      ...({
+                        milano: { objectPosition: "48% 48%", transform: "scale(1.65)", transformOrigin: "48% 48%" },
+                        lyon: { objectPosition: "50% 48%", transform: "scale(1.65)", transformOrigin: "50% 48%" },
+                        aerodry: { objectPosition: "50% 54%", transform: "scale(1.18)", transformOrigin: "50% 54%" },
+                        veneza: { objectPosition: "50% 44%", transform: "scale(1.18)", transformOrigin: "50% 44%" }
+                      } as Record<string, { objectPosition: string; transform: string; transformOrigin: string }>)[fabric.slug?.toLowerCase() || ""]
+                    }}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   }
