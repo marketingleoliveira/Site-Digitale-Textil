@@ -42,13 +42,13 @@ const defaultImages: Record<string, string> = {
 // Helper function to get fabric image
 const getFabricImage = (fabric: {slug?: string;image_url?: string | null;}) => {
   // DIGITALE_HOME_MILANO_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-06ec8b41ccdb3ebc6e00ce31a65699ef385605d619d45158fb0d0663cccae90c.png";
+  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-836b9ba8868713be0.jpg";
   // DIGITALE_HOME_LYON_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "lyon") return "/images/home/lyon-modelo-7beabc2c7ecf819d0c39d14424d71fc5e447a2ada37f1b5c0f788984cb910e71.png";
+  if (fabric.slug?.toLowerCase() === "lyon") return "/images/home/lyon-modelo-d956f37c4b6e3951.jpg";
   // DIGITALE_HOME_AERODRY_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "aerodry") return "/images/home/aerodry-modelo-f40157beee6afafddb755528c597adec6a206b8bcff9e5325ba1e7ea0c2e273f.png";
+  if (fabric.slug?.toLowerCase() === "aerodry") return "/images/home/aerodry-modelo-a87b3f4156a11bbd.jpg";
   // DIGITALE_HOME_VENEZA_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "veneza") return "/images/home/veneza-modelo-509ee8d8a8219f722d0bf1d078aba450e9659c4005c7eb0519c3697e6ea8b796.png";
+  if (fabric.slug?.toLowerCase() === "veneza") return "/images/home/veneza-modelo-27788f65e19af619.jpg";
   if (fabric.image_url) return fabric.image_url;
   if (fabric.slug && defaultImages[fabric.slug]) return defaultImages[fabric.slug];
   return fabricMilano;
@@ -64,7 +64,6 @@ const fallbackFabrics = [
 
 export function Products() {
   const { t } = useLanguage();
-
   const { data: fabrics, isLoading: fabricsLoading } = useQuery({
     queryKey: ["featured-fabrics-home"],
     queryFn: async () => {
@@ -156,7 +155,7 @@ export function Products() {
                       {isVideoUrl(getFabricImage(fabric)) ?
                   <video
                     src={getFabricImage(fabric)}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover"
                     muted loop autoPlay playsInline /> :
 
 
@@ -167,18 +166,18 @@ export function Products() {
                       // Enquadramento individual: mesma prioridade para a roupa,
                       // sem filtros ou alteração do arquivo original.
                       ...({
-                        milano: { objectPosition: "48% 48%", transform: "scale(1.65)", transformOrigin: "48% 48%" },
-                        lyon: { objectPosition: "50% 48%", transform: "scale(1.65)", transformOrigin: "50% 48%" },
-                        aerodry: { objectPosition: "50% 54%", transform: "scale(1.18)", transformOrigin: "50% 54%" },
-                        veneza: { objectPosition: "50% 44%", transform: "scale(1.18)", transformOrigin: "50% 44%" }
+                        milano: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
+                        lyon: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
+                        aerodry: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
+                        veneza: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" }
                       } as Record<string, { objectPosition: string; transform: string; transformOrigin: string }>)[fabric.slug?.toLowerCase() || ""]
                     }}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    className="w-full h-full object-cover" />
                   }
 
                       {/* Gradient Overlay on Hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`} />
                       
                       {/* Logo Badge */}
                       <div className="hidden md:flex absolute top-2 right-2 md:top-3 md:right-3 w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg items-center justify-center shadow-lg p-1.5 transition-transform duration-300 group-hover:scale-110">
@@ -199,7 +198,7 @@ export function Products() {
                       </div>
 
                       {/* Hover Content */}
-                      <div className="absolute inset-0 hidden md:flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className={`absolute inset-0 hidden md:flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100`}>
                         <div className="bg-white text-foreground px-5 py-2.5 rounded-full font-semibold shadow-xl flex items-center gap-2 text-sm">
                           {t("products.viewMore")}
                           <ArrowRight className="h-4 w-4" />

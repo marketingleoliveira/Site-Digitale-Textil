@@ -79,20 +79,40 @@ export default function FabricDetail() {
   });
 
   const { data: otherFabrics } = useQuery({
-    queryKey: ["other-fabrics", slug],
+    queryKey: ["other-fabrics-by-segment", fabric?.id, fabric?.category_id],
     queryFn: async () => {
+      if (!fabric?.category_id) return [];
+      try {
+        const response = await fetch("/api/fabric-recommendations/" + encodeURIComponent(fabric.slug) + (fabric.slug === "lyon" ? "?v=3" : ""));
+        if (response.ok) {
+          return await response.json() as {id:string;slug:string;name:string;image_url:string|null;short_description:string|null}[];
+        }
+      } catch {
+        // Keep same-segment recommendations available during API outages.
+      }
       const { data, error } = await supabase
         .from("fabrics")
-        .select("*")
+        .select("*, fabric_category_assignments(category_id)")
         .eq("is_active", true)
-        .neq("slug", slug)
-        .order("display_order")
-        .limit(3);
+        .neq("slug", fabric.slug)
+        .order("display_order");
 
       if (error) throw error;
-      return data;
+      const sameSegment = (data || []).filter((candidate) =>
+        candidate.category_id === fabric.category_id ||
+        candidate.fabric_category_assignments?.some(
+          (assignment) => assignment.category_id === fabric.category_id
+        )
+      );
+      if (fabric.slug === "lyon") {
+        return ["milano", "veneza", "oceanic"].flatMap(slug => {
+          const candidate = data?.find(item => item.slug === slug);
+          return candidate ? [candidate] : [];
+        });
+      }
+      return sameSegment.slice(0, 3);
     },
-    enabled: !!slug,
+    enabled: !!fabric?.id && !!fabric?.category_id,
   });
 
   if (isLoading) {
