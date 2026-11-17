@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import logoColor from "@/assets/logo-color.png";
 import { Skeleton } from "@/components/ui/skeleton";
 import { isVideoUrl } from "@/lib/media-utils";
 
@@ -42,13 +41,13 @@ const defaultImages: Record<string, string> = {
 // Helper function to get fabric image
 const getFabricImage = (fabric: {slug?: string;image_url?: string | null;}) => {
   // DIGITALE_HOME_MILANO_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-modelo-836b9ba8868713be0.jpg";
+  if (fabric.slug?.toLowerCase() === "milano") return "/images/home/milano-home-hq-20261117.webp";
   // DIGITALE_HOME_LYON_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "lyon") return "/images/home/lyon-modelo-d956f37c4b6e3951.jpg";
+  if (fabric.slug?.toLowerCase() === "lyon") return "/images/home/lyon-home-hq-20261117.webp";
   // DIGITALE_HOME_AERODRY_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "aerodry") return "/images/home/aerodry-modelo-a87b3f4156a11bbd.jpg";
+  if (fabric.slug?.toLowerCase() === "aerodry") return "/images/home/aerodry-home-hq-20261117.webp";
   // DIGITALE_HOME_VENEZA_MODELO_V1
-  if (fabric.slug?.toLowerCase() === "veneza") return "/images/home/veneza-modelo-27788f65e19af619.jpg";
+  if (fabric.slug?.toLowerCase() === "veneza") return "/images/home/veneza-home-hq-20261117.webp";
   if (fabric.image_url) return fabric.image_url;
   if (fabric.slug && defaultImages[fabric.slug]) return defaultImages[fabric.slug];
   return fabricMilano;
@@ -166,10 +165,10 @@ export function Products() {
                       // Enquadramento individual: mesma prioridade para a roupa,
                       // sem filtros ou alteração do arquivo original.
                       ...({
-                        milano: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
-                        lyon: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
-                        aerodry: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" },
-                        veneza: { objectPosition: "50% 35%", transform: "scale(1)", transformOrigin: "50% 35%" }
+                        milano: { objectPosition: "50% 78%", transform: "scale(1)", transformOrigin: "50% 78%" },
+                        lyon: { objectPosition: "50% 73%", transform: "scale(1)", transformOrigin: "50% 73%" },
+                        aerodry: { objectPosition: "50% 77%", transform: "scale(1)", transformOrigin: "50% 77%" },
+                        veneza: { objectPosition: "50% 75%", transform: "scale(1)", transformOrigin: "50% 75%" }
                       } as Record<string, { objectPosition: string; transform: string; transformOrigin: string }>)[fabric.slug?.toLowerCase() || ""]
                     }}
                     loading="lazy"
@@ -179,14 +178,6 @@ export function Products() {
                       {/* Gradient Overlay on Hover */}
                       <div className={`absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`} />
                       
-                      {/* Logo Badge */}
-                      <div className="hidden md:flex absolute top-2 right-2 md:top-3 md:right-3 w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg items-center justify-center shadow-lg p-1.5 transition-transform duration-300 group-hover:scale-110">
-                        <img
-                      src={logoColor}
-                      alt="Digitale"
-                      className="w-full h-full object-contain" />
-
-                      </div>
                       {/* DIGITALE_FABRICS_IMAGE_TITLE_OVERLAY_V2 */}
                       <div className="md:hidden digitale-fabric-mobile-title-wrap absolute inset-x-0 bottom-0 z-20">
                         <div className="digitale-fabric-mobile-title-gradient absolute inset-x-0 bottom-0 h-24 pointer-events-none" />
