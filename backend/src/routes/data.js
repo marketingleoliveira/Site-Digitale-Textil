@@ -510,6 +510,26 @@ async function allRows(
   );
 }
 
+// Public blog view counter: only an atomic increment on published posts.
+router.post("/blog-view", async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  const id = req.body?.id;
+  if (typeof id !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    return res.status(400).json({ error: "invalid_post_id" });
+  }
+  try {
+    const [result] = await db.execute(
+      "UPDATE blog_posts SET views = COALESCE(views, 0) + 1 WHERE id = ? AND status = 'published'",
+      [id]
+    );
+    if (!result.affectedRows) return res.status(404).json({ error: "post_not_found" });
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error("BLOG_VIEW", error.code || error.message);
+    return res.status(500).json({ error: "view_registration_failed" });
+  }
+});
+
 router.post(
   "/query",
   async (req, res) => {

@@ -97,11 +97,15 @@ const BlogPost = () => {
         if (profile?.full_name) setAuthorName(profile.full_name);
       }
 
-      // Increment views
-      await supabase
-        .from("blog_posts")
-        .update({ views: (postData.views || 0) + 1 })
-        .eq("id", postData.id);
+      // Register public views without administrative authentication.
+      void fetch("/api/data/blog-view", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: postData.id }),
+        keepalive: true,
+      }).then(response => {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+      }).catch(error => console.warn("Blog view registration failed", error));
 
       // Fetch related posts from same category
       if (postData.category) {
